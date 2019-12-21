@@ -9,6 +9,7 @@
       <th>State</th>
       <th>Zip</th>
     </tr>
+    <%= link_to 'Cancel Order', "/orders/#{@order.id}", method: :patch %>
     <tr>
       <td><p><%= @order.name %> </p></td>
       <td><p><%= @order.address %> </p></td>

@@ -31,6 +31,18 @@ class OrdersController <ApplicationController
     @orders = Order.all
   end
 
+  def cancele
+    order = Order.find(params[:id])
+    if order.status == "pending"
+      order.update("status" => "cancelled")
+      redirect_to '/profile'
+      flash[:notice] = 'Your order has been cancelled'
+    else
+      redirect_to "/orders/#{order.id}"
+      flash[:error] = 'Your cant be cancelled because the seller has shipped'
+    end
+  end
+
   private
 
   def order_params
