@@ -37,15 +37,11 @@ RSpec.describe "user logging out" do
 
     click_button "Create Order"
 
-    # expect(tire.inventory).to eq(10)
-    # expect(pull_toy.inventory).to eq(31)
-
     new_order = Order.last
 
-    expect(page).to have_content('Order status: pending')
+    expect(page).to have_content('Order Status: pending')
 
-    click_on 'Order number:'
-    # binding.pry
+    click_on 'Order Number:'
     expect(page).to have_link('Cancel Order')
     click_on 'Cancel Order'
 
@@ -64,18 +60,3 @@ RSpec.describe "user logging out" do
 
   end
 end
-
-
-# Order.last.item_orders
-
-#     As a registered user
-# When I visit an order's show page
-# I see a button or link to cancel the order only if the order is still pending
-# When I click the cancel button for an order, the following happens:
-#
-# Each row in the "order items" table is given a status of "unfulfilled"
-# The order itself is given a status of "cancelled"
-# Any item quantities in the order that were previously fulfilled have their quantities returned to their respective merchant's inventory for that item.
-# I am returned to my profile page
-# I see a flash message telling me the order is now cancelled
-# And I see that this order now has an updated status of "cancelled"
