@@ -1,4 +1,4 @@
-class OrdersController <ApplicationController
+class OrdersController < ApplicationController
 
   def new
   end
@@ -31,7 +31,7 @@ class OrdersController <ApplicationController
     @orders = Order.all
   end
 
-  def cancele
+  def cancel
     order = Order.find(params[:id])
     if order.status == "pending"
       order.update("status" => "cancelled")
@@ -39,7 +39,7 @@ class OrdersController <ApplicationController
       flash[:notice] = 'Your order has been cancelled'
     else
       redirect_to "/orders/#{order.id}"
-      flash[:error] = 'Your cant be cancelled because the seller has shipped'
+      flash[:error] = "Your order can't be cancelled because the seller has shipped"
     end
   end
 
