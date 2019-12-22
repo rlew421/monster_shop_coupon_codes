@@ -15,7 +15,7 @@ RSpec.describe "Order show page", type: :feature do
     items_array = [ item_order_1, item_order_2]
     visit "/profile/orders"
 
-    click_on("Order number: #{order_1.id}")
+    click_on("Order Number: #{order_1.id}")
     expect(current_path).to eq("/profile/orders/#{order_1.id}")
 
     expect(page).to have_content("Order ID: #{order_1.id}")
@@ -33,7 +33,7 @@ RSpec.describe "Order show page", type: :feature do
       click_on "#{item_order_1.item.id}-photo"
       expect(current_path).to eq("/items/#{item_order_1.item_id}")
     end
-    
+
   visit "/profile/orders/#{order_1.id}"
     within "#item-#{item_order_2.item_id}" do
       expect(page).to have_content(item_order_2.item.name)

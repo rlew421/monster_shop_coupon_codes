@@ -1,7 +1,21 @@
 require 'rails_helper'
 
-RSpec.describe "user logging out" do
-  it "redirects to welcome page, empties cart, and displays flash message" do
+RSpec.describe 'user show (profile) page' do
+  it "I see all my profile data on the page except my password" do
+    user = User.create!(name: "User", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user@user.com", password: "user", password_confirmation: "user")
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+    visit '/profile'
+
+    expect(page).to have_content(user.name)
+    expect(page).to have_content(user.address)
+    expect(page).to have_content(user.city)
+    expect(page).to have_content(user.state)
+    expect(page).to have_content(user.zip)
+    expect(page).to have_content(user.email)
+  end
+
+  it "I see a link called 'My Orders' that takes me to my profile orders page" do
     user = User.create!(name: "Polly Esther", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "veryoriginalemailgmail.com", password: "polyester", password_confirmation: "polyester")
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
@@ -37,26 +51,10 @@ RSpec.describe "user logging out" do
 
     click_button "Create Order"
 
-    new_order = Order.last
+    visit '/profile'
 
-    expect(page).to have_content('Order Status: pending')
+    click_link "My Orders"
 
-    click_on 'Order Number:'
-    expect(page).to have_link('Cancel Order')
-    click_on 'Cancel Order'
-
-    expect(current_path).to eq("/profile")
-
-    expect(page).to have_content('Your order has been cancelled')
-
-    expect(Order.last.status).to eq('cancelled')
-
-    expect(Order.last.item_orders[0].status).to have_content('unfulfilled')
-
-    expect(Order.last.item_orders[1].status).to have_content('unfulfilled')
-
-    expect(tire.inventory).to eq(12)
-    expect(pull_toy.inventory).to eq(32)
-
+    expect(current_path).to eq('/profile/orders')
   end
 end

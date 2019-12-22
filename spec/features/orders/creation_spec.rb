@@ -128,10 +128,11 @@ RSpec.describe("Order Creation") do
       click_button "Create Order"
 
       new_order = Order.last
+      
       expect(current_path).to eq("/profile/orders")
       expect(page).to have_content("Your order was created!")
-      expect(page).to have_content("Order number: #{new_order.id}")
-      expect(page).to have_content("Order status: pending")
+      expect(page).to have_content("Order Number: #{new_order.id}")
+      expect(page).to have_content("Order Status: pending")
 
     end
 
