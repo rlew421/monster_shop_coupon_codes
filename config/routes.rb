@@ -55,6 +55,7 @@ Rails.application.routes.draw do
 
   namespace :merchant do
     get '/', to: "merchant#show"
+    get '/items', to: "items#index"
   end
 
   namespace :admin do
