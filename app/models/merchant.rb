@@ -40,9 +40,4 @@ class Merchant <ApplicationRecord
       order.subtotal
     end
   end
-
-  def order_creation_date(order_id)
-    Order.find(order_id).created_at
-  end
-
 end
