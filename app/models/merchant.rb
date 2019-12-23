@@ -26,4 +26,18 @@ class Merchant <ApplicationRecord
     item_orders.distinct.joins(:order).pluck(:city)
   end
 
+  def orders_info
+    item_orders.select('order_id, SUM(item_orders.quantity) AS total_quantity').group(:order_id)
+    # can't get join to work...it defaults to INNER JOIN items due to the relationship I believe.
+
+    # SELECT orders.created_at, SUM(item_orders.quantity) AS total_quantity, SUM(item_orders.price) AS total_price FROM item_orders JOIN orders ON item_orders.order_id = orders.id GROUP BY orders.id;
+  end
+
+  def order_price(order_id)
+    orders = item_orders.where(order_id: order_id)
+
+    orders.sum do |order|
+      order.subtotal
+    end
+  end
 end
