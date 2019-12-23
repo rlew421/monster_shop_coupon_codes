@@ -60,6 +60,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get '/', to: "admins#show"
+    get '/merchants/:merchant_id', to: "merchants#show"
     get '/users', to: "users#index"
     get '/users/:id/profile', to: "users#show"
     get '/users/:user_id/profile/edit', to: "users#edit"
@@ -69,5 +70,9 @@ Rails.application.routes.draw do
     get '/users/:user_id/upgrade_to_merchant_employee', to: "users#change_role"
     get '/users/:user_id/upgrade_to_merchant_admin', to: "users#change_role"
     patch '/orders/:id', to: "orders#update"
+  end
+
+  scope :admin do
+    get '/merchants/:merchant_id/items', to: "merchant/items#index"
   end
 end
