@@ -71,13 +71,17 @@ describe Merchant, type: :model do
       item_order_2 = order_2.item_orders.create!(item: tire, price: tire.price, quantity: 20)
       item_order_2 = order_2.item_orders.create!(item: skis, price: skis.price, quantity: 7)
       item_order_3 = order_3.item_orders.create!(item: skis, price: skis.price, quantity: 2)
+
+      bike_stats = bike_shop.orders_info
       require "pry"; binding.pry
-      expect(bike_shop.orders_info.first.order_id).to eq(order_1.id)
-      expect(bike_shop.orders_info.last.order_id).to eq(order_2.id)
-      expect(bike_shop.orders_info.fist.total_quantity).to eq(6)
-      expect(bike_shop.orders_info.last.total_quantity).to eq(20)
-      expect(bike_shop.orders_info.fist.total_price).to eq(550)
-      expect(bike_shop.orders_info.last.total_price).to eq(2000)
+      expect(bike_stats[0].order_id).to eq(order_1.id)
+      expect(bike_stats[1].order_id).to eq(order_2.id)
+      expect(bike_stats[0].quantity).to eq(6)
+      expect(bike_stats[1].quantity).to eq(20)
+      #currently not working
+      
+      expect(bike_stats[0].price).to eq(550)
+      expect(bike_stats[1].price).to eq(2000)
     end
 
   end
