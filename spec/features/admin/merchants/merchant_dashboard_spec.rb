@@ -80,8 +80,8 @@ RSpec.describe "as an admin" do
         expect(page).to have_content("Total Value: $20")
       end
 
-      expect(page).to_not have_content(order_3.id)
-      expect(page).to_not have_content(order_4.id)
+      expect(page).to_not have_link(order_3.id)
+      expect(page).to_not have_link(order_4.id)
     end
   end
 end
