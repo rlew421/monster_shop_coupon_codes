@@ -28,4 +28,11 @@ class Order <ApplicationRecord
     # can take argument of "packaged", "pending", "shipped", or "cancelled"
     where(status: "#{status_searching_for}")
   end
+
+  def fulfill
+    current_order = Order.find(self.id)
+    if current_order.item_orders.all?{|item_order| item_order[:status] == 'fulfilled' }
+      current_order.update(status: 1)
+    end
+  end
 end
