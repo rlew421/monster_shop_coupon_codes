@@ -46,14 +46,14 @@ RSpec.describe "merchant dashboard" do
       within '#orders' do
         within "#order-#{order_1.id}" do
           expect(page).to have_link(order_1.id)
-          expect(page).to have_content(order_1.created_at)
+          expect(page).to have_content(order_1.created_at.strftime('%m/%d/%y'))
           expect(page).to have_content("Total Quantity: 6")
           expect(page).to have_content("Total Value: $5.50")
         end
 
         within "#order-#{order_2.id}" do
           expect(page).to have_link(order_2.id)
-          expect(page).to have_content(order_2.created_at)
+          expect(page).to have_content(order_2.created_at.strftime('%m/%d/%y'))
           expect(page).to have_content("Total Quantity: 20")
           expect(page).to have_content("Total Value: $20")
         end
