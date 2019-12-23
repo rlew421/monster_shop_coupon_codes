@@ -17,7 +17,7 @@ RSpec.describe "merchant dashboard" do
       expect(page).to have_content(bike_shop.zip)
     end
 
-    it "displays a list of orders that contain items I sell" do
+    it "displays a list of pending orders that contain items I sell" do
       bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       ski_shop = Merchant.create(name: "Ski Palace", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
 
@@ -30,11 +30,13 @@ RSpec.describe "merchant dashboard" do
       order_1 = user.orders.create!(name: 'Bob', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
       order_2 = user.orders.create!(name: 'Bob', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
       order_3 = user.orders.create!(name: 'Bob', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+      order_4 = user.orders.create!(name: 'Bob', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 1)
       item_order_1 = order_1.item_orders.create!(item: chain, price: chain.price, quantity: 1)
       item_order_1 = order_1.item_orders.create!(item: tire, price: tire.price, quantity: 5)
       item_order_2 = order_2.item_orders.create!(item: tire, price: tire.price, quantity: 20)
       item_order_2 = order_2.item_orders.create!(item: skis, price: skis.price, quantity: 7)
       item_order_3 = order_3.item_orders.create!(item: skis, price: skis.price, quantity: 2)
+      item_order_4 = order_4.item_orders.create!(item: chain, price: chain.price, quantity: 4)
       merchant_admin = bike_shop.users.create!(name: "Merchant Admin", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "merchant_admin@merchant_admin.com", password: "merchant_admin", password_confirmation: "merchant_admin", role: 2)
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_admin)
@@ -44,19 +46,20 @@ RSpec.describe "merchant dashboard" do
       within '#orders' do
         within "#order-#{order_1.id}" do
           expect(page).to have_link(order_1.id)
-          expect(page).to have_content(order_1.date)
+          expect(page).to have_content(order_1.created_at)
           expect(page).to have_content("Total Quantity: 6")
           expect(page).to have_content("Total Value: $5.50")
         end
 
         within "#order-#{order_2.id}" do
           expect(page).to have_link(order_2.id)
-          expect(page).to have_content(order_2.date)
+          expect(page).to have_content(order_2.created_at)
           expect(page).to have_content("Total Quantity: 20")
           expect(page).to have_content("Total Value: $20")
         end
 
         expect(page).to_not have_content(order_3.id)
+        expect(page).to_not have_content(order_4.id)
       end
     end
   end

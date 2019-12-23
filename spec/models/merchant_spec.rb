@@ -76,8 +76,8 @@ describe Merchant, type: :model do
 
       expect(bike_stats[0].order_id).to eq(order_1.id)
       expect(bike_stats[1].order_id).to eq(order_2.id)
-      expect(bike_stats[0].quantity).to eq(6)
-      expect(bike_stats[1].quantity).to eq(20)
+      expect(bike_stats[0].total_quantity).to eq(6)
+      expect(bike_stats[1].total_quantity).to eq(20)
     end
 
     it "#order_price" do
