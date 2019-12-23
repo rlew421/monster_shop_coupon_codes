@@ -27,13 +27,8 @@ class Merchant <ApplicationRecord
   end
 
   def orders_info
-    #each order
-    #date
-    #total quantity of items
-    #total value
-
-    item_orders.select('order_id, SUM(item_orders.quantity) AS quantity, SUM(item_orders.price) AS price').group(:order_id)
-
+    item_orders.select('order_id, SUM(item_orders.quantity) AS quantity').group(:order_id)
+    # can't get join to work...it defaults to INNER JOIN items due to the relationship I believe.
 
     # SELECT orders.created_at, SUM(item_orders.quantity) AS total_quantity, SUM(item_orders.price) AS total_price FROM item_orders JOIN orders ON item_orders.order_id = orders.id GROUP BY orders.id;
   end
