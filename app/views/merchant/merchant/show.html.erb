@@ -13,7 +13,7 @@
       <%= link_to "#{item_order.order_id}", "merchant/orders/#{item_order.order.id}" %>
       Order Creation Date: <%= item_order.order.created_at.strftime('%m/%d/%y') %>
       Total Quantity: <%= item_order.total_quantity %>
-      Total Value: <%= number_to_currency(@user.merchant.order_price(item_order.order_id)/100) %>
+      Total Value: <%= number_to_currency(@user.merchant.order_price(item_order.order_id)/100.0) %>
     </section>
     <% end %>
   <% end  %>
