@@ -4,4 +4,18 @@
 <p>State: <%= @merchant.state %></p>
 <p>Zip: <%= @merchant.zip %></p>
 
+<section id="orders">
+  <h2>Orders:</h2>
+  <% @merchant.orders_info.each do |item_order| %>
+    <% if item_order.order.status == "pending" %>
+    <section id="order-<%= item_order.order_id %>">
+      <%= link_to "#{item_order.order_id}", "merchant/orders/#{item_order.order.id}" %>
+      Order Creation Date: <%= item_order.order.created_at.strftime('%m/%d/%y') %>
+      Total Quantity: <%= item_order.total_quantity %>
+      Total Value: <%= number_to_currency(@merchant.order_price(item_order.order_id)/100.0) %>
+    </section>
+    <% end %>
+  <% end  %>
+</section>
+
 <%= link_to "View #{@merchant.name}'s Items", "/admin/merchants/#{@merchant.id}/items" %>
