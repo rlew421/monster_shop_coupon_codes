@@ -3,8 +3,8 @@
   <% @orders.each do |order| %>
     <section id= 'order-<%=order.id%>'>
       <p><%= link_to "Order Number: #{order.id}", "/profile/orders/#{order.id}" %></p>
-      <p> Order Created at: <%= "#{order.created_at.day}/#{order.created_at.month}/#{order.created_at.year}" %></p>
-      <p> Order Updated at: <%= "#{order.updated_at.day}/#{order.updated_at.month}/#{order.updated_at.year}" %></p>
+      <p> Order Created at: <%= order.created_at.strftime('%m/%d/%y') %></p>
+      <p> Order Updated at: <%= order.created_at.strftime('%m/%d/%y') %></p>
       <p> Order Status: <%= order.status %></p>
       <% if order.total_items < 2%>
         <p>Total Number of Items in Your Order: <%= order.total_items %> Item</p>
