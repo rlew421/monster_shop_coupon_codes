@@ -1,0 +1,7 @@
+<h1><%= @merchant.name %></h1>
+<p>Address: <%= @merchant.address %></p>
+<p>City: <%= @merchant.city %></p>
+<p>State: <%= @merchant.state %></p>
+<p>Zip: <%= @merchant.zip %></p>
+
+<%= link_to "View #{@merchant.name}'s Items", "/admin/merchants/#{@merchant.id}/items" %>
