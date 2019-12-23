@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "merchant dashboard" do
   describe "as a merchant admin" do
-    xit "displays the info of the merchant I work for" do
+    it "displays the info of the merchant I work for" do
       bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       merchant_admin = bike_shop.users.create!(name: "Merchant Admin", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "merchant_admin@merchant_admin.com", password: "merchant_admin", password_confirmation: "merchant_admin", role: 2)
 
@@ -65,7 +65,7 @@ RSpec.describe "merchant dashboard" do
   end
 
   describe "as a merchant employee" do
-    xit "displays the info of the merchant I work for" do
+    it "displays the info of the merchant I work for" do
       ski_shop = Merchant.create(name: "Ski Palace", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       merchant_employee = ski_shop.users.create!(name: "Merchant Employee", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "merchant_employee@merchant_employee.com", password: "merchant_employee", password_confirmation: "merchant_employee", role: 1)
 
