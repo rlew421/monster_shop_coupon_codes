@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
       flash[:success] = "Hello, #{user.name}. You are now logged in."
       if user.user?
         redirect_to '/profile'
-      elsif user.merchant_admin?
+      elsif user.merchant_admin? || user.merchant_employee?
         redirect_to '/merchant'
       elsif user.admin?
         redirect_to '/admin'

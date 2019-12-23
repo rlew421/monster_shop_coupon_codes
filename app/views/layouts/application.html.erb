@@ -19,6 +19,8 @@
       <% if current_user %>
         <% if current_user.user? %>
           <%= link_to "Profile", "/profile" %>
+        <% elsif current_user.merchant_employee? %>
+          <%= link_to "Dashboard", "/merchant" %>
         <% elsif current_user.merchant_admin? %>
           <%= link_to "Dashboard", "/merchant" %>
         <% elsif current_user.admin? %>
