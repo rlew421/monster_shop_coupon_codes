@@ -60,6 +60,12 @@ RSpec.describe "merchant dashboard" do
 
         expect(page).to_not have_content(order_3.id)
         expect(page).to_not have_content(order_4.id)
+
+        within "#order-#{order_1.id}" do
+          click_link "#{order_1.id}"
+        end
+
+        expect(current_path).to eq("/merchant/orders/#{order_1.id}")
       end
     end
   end
