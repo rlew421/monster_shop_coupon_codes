@@ -99,6 +99,11 @@ RSpec.describe 'Site Navigation' do
         click_link "See All Users"
       end
       expect(current_path).to eq("/admin/users")
+
+      within 'nav' do
+        click_link "All Merchants"
+      end
+      expect(current_path).to eq("/admin/merchants")
     end
   end
 end
