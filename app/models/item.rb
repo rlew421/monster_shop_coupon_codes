@@ -31,4 +31,12 @@ class Item <ApplicationRecord
 
     # SELECT items.*, sum(item_orders.quantity) AS total_quantity FROM items LEFT JOIN item_orders ON items.id = item_orders.item_id GROUP BY items.id;
   end
+
+  def self.deactivate_items
+    update_all(:active? => false)
+  end
+
+  def self.activate_items
+    update_all(:active? => true)
+  end
 end
