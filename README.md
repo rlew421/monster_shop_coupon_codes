@@ -746,6 +746,13 @@ User Story 42, Merchant deactivates an item
 
 As a merchant
 When I visit my items page
+I see all of my items with the following info: 
+ - name
+- description
+- price
+- image
+- active/inactive status
+- inventory
 I see a link or button to deactivate the item next to each item that is active
 And I click on the "deactivate" button or link for an item
 I am returned to my items page
