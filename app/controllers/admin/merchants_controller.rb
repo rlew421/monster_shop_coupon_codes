@@ -12,8 +12,10 @@ class Admin::MerchantsController < Admin::BaseController
     @merchant.toggle(:enabled?).save
     if @merchant.enabled?
       flash[:notice] = "#{@merchant.name} has been enabled."
+      @merchant.items.activate_items
     else
       flash[:notice] = "#{@merchant.name} has been disabled."
+      @merchant.items.deactivate_items
     end
     redirect_to '/admin/merchants'
   end
