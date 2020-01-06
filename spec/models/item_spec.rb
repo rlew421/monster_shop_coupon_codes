@@ -110,6 +110,33 @@ describe Item, type: :model do
         expect(Item.popular("asc").last.total_quantity).to eq(12)
         expect(Item.popular("asc").length).to eq(5)
       end
+
+      it "can toggle items between activated and deactivated" do
+        meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+        tire = meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+        bike = meg.items.create(name: "Cool Bike", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+        pedal = meg.items.create(name: "Pedal", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+
+        meg.items.deactivate_items
+
+        tire.reload
+        bike.reload
+        pedal.reload
+
+        expect(tire.active?).to eq(false)
+        expect(bike.active?).to eq(false)
+        expect(pedal.active?).to eq(false)
+
+        meg.items.activate_items
+
+        tire.reload
+        bike.reload
+        pedal.reload
+
+        expect(tire.active?).to eq(true)
+        expect(bike.active?).to eq(true)
+        expect(pedal.active?).to eq(true)
+      end
     end
   end
 end
