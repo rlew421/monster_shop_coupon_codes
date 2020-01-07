@@ -31,7 +31,7 @@
       <th>Quantity</th>
       <th>Subtotal</th>
     </tr>
-  <% @order.item_orders.each do |item_order|%>
+  <% current_user.merchant.item_orders_on_order(@order).each do |item_order|%>
     <tr id = "item-<%=item_order.item_id%>">
       <td><p><%=link_to item_order.item.name, "/items/#{item_order.item_id}"%></p></td>
       <td>
