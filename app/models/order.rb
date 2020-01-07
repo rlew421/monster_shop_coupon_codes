@@ -35,10 +35,4 @@ class Order <ApplicationRecord
       current_order.update(status: 1)
     end
   end
-
-  def merchant_item_orders(merchant_id)
-    item_orders.where(merchant_id: merchant_id)
-    # item_orders.where("items.merchant_id = #{merchant_id}")
-    # SELECT * FROM item_orders JOIN items ON items.id = item_orders.item_id WHERE items.merchant_id = #{merchant_id};
-  end
 end

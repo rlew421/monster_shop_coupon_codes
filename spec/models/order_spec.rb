@@ -75,10 +75,5 @@ describe Order, type: :model do
       expect(order_1.status).to eq('packaged')
       expect(order_2.status).to eq('pending')
     end
-
-    it "merchant_items" do
-      expect(@order_1.merchant_item_orders(@meg.id)).to eq(@item_order_1)
-      expect(@order_2.merchant_item_orders(@brian.id)).to eq(@item_order_2)
-    end
   end
 end
