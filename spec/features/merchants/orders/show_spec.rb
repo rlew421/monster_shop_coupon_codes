@@ -34,19 +34,15 @@ RSpec.describe "as a merchant" do
       expect(page).to have_content(@order_1.state)
       expect(page).to have_content(@order_1.zip)
 
-      within "item-#{@pull_toy.id}" do
-        expect(page).to have_link(@pull_toy.name)
-        expect(page).to have_css("img[src*='#{@pull_toy.image}']")
-        expect(page).to have_content(@pull_toy.price)
-        expect(page).to have_content(@item_order_2.quantity)
-      end
+      expect(page).to have_link(@pull_toy.name)
+      expect(page).to have_css("img[src*='#{@pull_toy.image}']")
+      expect(page).to have_content(@pull_toy.price)
+      expect(page).to have_content(@item_order_2.quantity)
 
-      within "item-#{@dog_bone.id}" do
-        expect(page).to have_link(@dog_bone.name)
-        expect(page).to have_css("img[src*='#{@dog_bone.image}']")
-        expect(page).to have_content(@dog_bone.price)
-        expect(page).to have_content(@item_order_3.quantity)
-      end
+      expect(page).to have_link(@dog_bone.name)
+      expect(page).to have_css("img[src*='#{@dog_bone.image}']")
+      expect(page).to have_content(@dog_bone.price)
+      expect(page).to have_content(@item_order_3.quantity)
 
       expect(page).to_not have_content(@tire.name)
     end
