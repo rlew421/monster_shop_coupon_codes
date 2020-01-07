@@ -105,5 +105,22 @@ describe Merchant, type: :model do
       expect(ski_shop.order_price(order_2.id)).to eq(1260)
       expect(ski_shop.order_price(order_3.id)).to eq(360)
     end
+
+    it "items_on_order" do
+      meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+      brian = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
+
+      tire = meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+      pull_toy = brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+
+      user = User.create!(name: "User", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "useruser.com", password: "user", password_confirmation: "user")
+      order_1 = user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 2)
+
+      item_order_1 = order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2)
+      item_order_2 = order_1.item_orders.create!(item: pull_toy, price: pull_toy.price, quantity: 3)
+
+      expect(meg.item_orders_on_order(order_1)).to eq([item_order_1])
+      expect(brian.item_orders_on_order(order_1)).to eq([item_order_2])
+    end
   end
 end

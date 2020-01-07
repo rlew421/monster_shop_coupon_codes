@@ -40,4 +40,9 @@ class Merchant <ApplicationRecord
       order.subtotal
     end
   end
+
+  def item_orders_on_order(orderid)
+    item_orders.where(order_id: orderid)
+  end
+
 end
