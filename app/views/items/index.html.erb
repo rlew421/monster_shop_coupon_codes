@@ -4,6 +4,7 @@
 <% else %>
   <h1>All Items</h1>
 <% end %>
+
 <% if @items.popular != [] %>
   <section id="most-popular">
     <p>The Hottest Items on the Shelves!</p>
@@ -35,9 +36,11 @@
       <% if !@merchant %>
       <% end %>
       <% if item.active? %>
-        <p>Active</p>
+        <p>Item status: Active</p>
+        <%= button_to "Deactivate #{item.name}", "/merchants/#{item.merchant.id}/items/#{item.id}", method: :patch %>
       <% else %>
-        <p>Inactive</p>
+        <p>Item status: Inactive</p>
+        <%= button_to "Enable #{item.name}", "/merchants/#{item.merchant.id}/items/#{item.id}", method: :patch %>
       <% end %>
     </section>
     <% end %>
