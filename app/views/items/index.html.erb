@@ -33,14 +33,15 @@
       <p> <%= item.description unless @merchant%> </p>
       <p>Price: <%=number_to_currency(item.price) %> </p>
       <p>Inventory: <%= item.inventory %> </p>
-      <% if !@merchant %>
-      <% end %>
       <% if item.active? %>
         <p>Item status: Active</p>
         <%= button_to "Deactivate #{item.name}", "/merchants/#{item.merchant.id}/items/#{item.id}", method: :patch %>
       <% else %>
         <p>Item status: Inactive</p>
         <%= button_to "Enable #{item.name}", "/merchants/#{item.merchant.id}/items/#{item.id}", method: :patch %>
+      <% end %>
+      <% if item.no_orders? %>
+        <%= button_to "Delete #{item.name}", "/merchants/#{item.merchant.id}/items/#{item.id}", method: :delete %>
       <% end %>
     </section>
     <% end %>
