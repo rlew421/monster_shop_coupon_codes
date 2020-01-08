@@ -39,5 +39,49 @@ RSpec.describe "Merchant Items Index Page" do
         expect(page).to have_content("Inventory: #{@shifter.inventory}")
       end
     end
+
+    it 'merchant can deactivate item' do
+      visit "merchants/#{@meg.id}/items"
+
+      expect(page).to_not have_button("Activate #{@tire.name}")
+      click_on("Deactivate #{@tire.name}")
+
+      expect(current_path).to eq("/merchants/#{@meg.id}/items")
+      expect(page).to have_content("#{@tire.name} is deactivated and no longer for sale.")
+
+      @tire.reload
+
+      within "#item-#{@tire.id}" do
+        expect(page).to have_content("Item status: Inactive")
+      end
+    end
+
+    it "merchant can activate an item" do
+      visit "merchants/#{@meg.id}/items"
+      expect(page).to_not have_button("Deactivate #{@shifter.name}")
+
+      click_on("Enable #{@shifter.name}")
+      expect(current_path).to eq("/merchants/#{@meg.id}/items")
+      expect(page).to have_content("#{@shifter.name} is active and available for sale.")
+
+      @shifter.reload
+
+      within "#item-#{@shifter.id}" do
+        expect(page).to have_content("Item status: Active")
+      end
+    end
+
+    it "merchant can delete an item that has never been ordered" do
+      user = User.create!(name: "User", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user4@user.com", password: "user", password_confirmation: "user")
+      order_1 = user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+      item_order_1 = order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 5)
+
+      visit "merchants/#{@meg.id}/items"
+
+      expect(page).to_not have_button("Delete #{@tire.name}")
+      click_on("Delete #{@shifter.name}")
+      expect(current_path).to eq("/merchants/#{@meg.id}/items")
+      expect(page).to have_content("#{@shifter.name} has been deleted.")
+    end
   end
 end
