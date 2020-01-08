@@ -22,5 +22,6 @@
 <% else %>
   <p> You do not currently belong to a merchant in the system. </p>
 <% end %>
-
-<%= link_to "View My Items", "/merchant/items" %>
+<% if @user.merchant != nil %>
+  <%= link_to "View My Items", "/merchant/#{@user.merchant.id}/items" %>
+<% end %>
