@@ -34,7 +34,7 @@ RSpec.describe 'admin can perform the same actions that a user can and also chan
       visit '/'
 
       within 'nav' do
-        click_link "See All Users"
+        click_link "Users"
       end
 
       expect(current_path).to eq('/admin/users')
