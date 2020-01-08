@@ -2,7 +2,7 @@
 
 <% @users.each do |user| %>
   <section id='user-<%=user.id%>'>
-    <%= link_to "#{user.name}", "admin/users/#{user.id}" %>
+    <%= link_to "#{user.name}", "/users/#{user.id}" %>
     Registered: <%= user.created_at %>
     User Type: <%= user.role %>
     <% if user.role != "admin" %>
