@@ -24,5 +24,10 @@ RSpec.describe "as an admin" do
     expect(page).to have_content(user.email)
     expect(page).to have_link("Edit #{user.name}'s Password")
     expect(page).to_not have_link("Edit #{user.name}'s Profile")
+
+    visit "/admin/users/#{merchant_admin.id}"
+
+    expect(page).to have_content("You do not currently belong to a merchant in the system.")
+    expect(page).to_not have_content(user.name)
   end
 end
