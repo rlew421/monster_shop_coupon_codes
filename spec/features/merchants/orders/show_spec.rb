@@ -45,6 +45,28 @@ RSpec.describe "as a merchant" do
       expect(page).to have_content(@item_order_3.quantity)
 
       expect(page).to_not have_content(@tire.name)
+
+      visit "/merchant/orders/#{@order_2.id}"
+
+      expect(page).to have_link(@pull_toy.name)
+      expect(page).to have_css("img[src*='#{@pull_toy.image}']")
+      expect(page).to have_content(@pull_toy.price)
+      expect(page).to have_content(@item_order_2.quantity)
+
+      expect(page).to_not have_content(@tire.name)
+
+      merchant_admin2 = @bike_shop.users.create!(name: "Bike Shop Admin", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "bike_shop@admin.com", password: "merchant_admin", password_confirmation: "merchant_admin", role: 2)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_admin2)
+
+      visit "/merchant/orders/#{@order_1.id}"
+
+      expect(page).to have_link(@tire.name)
+      expect(page).to have_css("img[src*='#{@tire.image}']")
+      expect(page).to have_content(@tire.price)
+      expect(page).to have_content(@item_order_1.quantity)
+
+      expect(page).to_not have_content(@pull_toy.name)
+      expect(page).to_not have_content(@dog_bone.name)
     end
   end
 end
