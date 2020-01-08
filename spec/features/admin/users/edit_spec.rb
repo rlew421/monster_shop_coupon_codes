@@ -38,7 +38,6 @@ RSpec.describe 'admin can perform the same actions that a user can and also chan
       end
 
       expect(current_path).to eq('/admin/users')
-      expect(page).to_not have_content(merchant_admin.name)
 
       within "#user-#{user_1.id}" do
         click_link("Edit #{user_1.name}'s Profile")
@@ -138,15 +137,17 @@ RSpec.describe 'admin can perform the same actions that a user can and also chan
         click_link("Upgrade #{user_1.name} to Merchant Employee")
       end
 
+      user_1.reload
+
       expect(current_path).to eq('/admin/users')
-      expect(page).to_not have_css("#user-#{user_1.id}")
+      expect(user_1.role).to eq("merchant_employee")
 
       within "#user-#{user_2.id}" do
         click_link("Upgrade #{user_2.name} to Merchant Admin")
       end
 
       expect(current_path).to eq('/admin/users')
-      expect(page).to_not have_css("#user-#{user_2.id}")
+      expect(user_2.role).to eq("merchant_admin")
     end
   end
 end
