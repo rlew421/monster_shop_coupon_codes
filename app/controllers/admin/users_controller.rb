@@ -39,12 +39,11 @@ class Admin::UsersController < Admin::BaseController
 
   def change_role
     user = User.find(params[:user_id])
-    require "pry"; binding.pry
-    if request.env['PATH_INFO'] == "admin/users/#{user.id}/upgrade_to_merchant_employee"
-      user.update_column(:role, 1)
+    if request.env['PATH_INFO'] == "/admin/users/#{user.id}/upgrade_to_merchant_employee"
+      user.update(role: 1)
       redirect_to '/admin/users'
     else request.env['PATH_INFO'] == "/users/#{user.id}/upgrade_to_merchant_admin"
-      user.update_column(:role, 2)
+      user.update(role: 2)
       redirect_to '/admin/users'
     end
   end

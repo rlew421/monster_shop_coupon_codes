@@ -146,6 +146,8 @@ RSpec.describe 'admin can perform the same actions that a user can and also chan
         click_link("Upgrade #{user_2.name} to Merchant Admin")
       end
 
+      user_2.reload
+
       expect(current_path).to eq('/admin/users')
       expect(user_2.role).to eq("merchant_admin")
     end
