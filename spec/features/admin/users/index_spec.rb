@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe "as an admin" do
   before :each do
     @user_1 = User.create!(name: "User", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user@user.com", password: "user", password_confirmation: "user")
-    @user_2 = User.create!(name: "User", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user2@user2.com", password: "user2", password_confirmation: "user")
-    @user_3 = User.create!(name: "User", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user3@user3.com", password: "user3", password_confirmation: "user")
-    @user_4 = User.create!(name: "User", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user4@user4.com", password: "user4", password_confirmation: "user")
+    @user_2 = User.create!(name: "User", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user2@user2.com", password: "user", password_confirmation: "user")
+    @user_3 = User.create!(name: "User", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user3@user3.com", password: "user", password_confirmation: "user")
+    @user_4 = User.create!(name: "User", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user4@user4.com", password: "user", password_confirmation: "user")
 
     @merchant_employee = User.create!(name: "Merchant Employee", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "merchant_employee@merchant_employee.com", password: "merchant_employee", password_confirmation: "merchant_employee", role: 1)
     @merchant_admin = User.create!(name: "Merchant Admin", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "merchant_admin@merchant_admin.com", password: "merchant_admin", password_confirmation: "merchant_admin", role: 2)
