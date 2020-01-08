@@ -1,8 +1,8 @@
 class ReviewsController<ApplicationController
 
   def new
-    @item = Item.find(params[:item_id])
-    @review = @item.reviews.new
+    item = Item.find(params[:item_id])
+    @review = item.reviews.new
   end
 
   def create
@@ -11,11 +11,11 @@ class ReviewsController<ApplicationController
       flash[:error] = "Please fill in all fields in order to create a review."
       redirect_to "/items/#{item.id}/reviews/new"
     else
-      @item = Item.find(params[:item_id])
-      @review = @item.reviews.create(review_params)
+      item = Item.find(params[:item_id])
+      @review = item.reviews.create(review_params)
       if @review.save
         flash[:success] = "Review successfully created"
-        redirect_to "/items/#{@item.id}"
+        redirect_to "/items/#{@review.item.id}"
       else
         flash[:error] = "Rating must be between 1 and 5"
         render :new
@@ -35,9 +35,8 @@ class ReviewsController<ApplicationController
 
   def destroy
     review = Review.find(params[:id])
-    item = review.item
     review.destroy
-    redirect_to "/items/#{item.id}"
+    redirect_to "/items/#{review.item.id}"
   end
 
   private
