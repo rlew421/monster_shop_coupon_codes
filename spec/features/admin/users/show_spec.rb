@@ -12,7 +12,7 @@ RSpec.describe "as an admin" do
 
     admin = User.create!(name: "Admin", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "admin@admin.com", password: "admin", password_confirmation: "admin", role: 3)
 
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
 
     visit "/admin/users/#{user.id}"
 
