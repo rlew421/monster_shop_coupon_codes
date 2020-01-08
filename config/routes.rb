@@ -59,6 +59,7 @@ Rails.application.routes.draw do
     get '/', to: "merchant#show"
     get '/items', to: "items#index"
     get '/orders/:id', to: 'orders#show'
+    get '/item_orders/:item_id/fulfill', to: 'item_orders#fulfill'
   end
 
   namespace :admin do
