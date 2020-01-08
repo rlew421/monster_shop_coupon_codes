@@ -44,7 +44,7 @@
             <%= button_to "Enable #{item.name}", "/merchants/#{item.merchant.id}/items/#{item.id}", method: :patch %>
           <% if item.no_orders? %>
             <%= button_to "Delete #{item.name}", "/merchants/#{item.merchant.id}/items/#{item.id}", method: :delete %>
-            <% end %>
+          <% end %>
         <% end %>
       <% end %>
     </section>
