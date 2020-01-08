@@ -62,15 +62,15 @@ RSpec.describe "Create Merchant Items" do
 
       click_on "Add New Item"
 
-      fill_in :name, with: name
+      # fill_in :name, with: name
       fill_in :price, with: price
       fill_in :description, with: description
       fill_in :image, with: image_url
-      fill_in :inventory, with: inventory
+      # fill_in :inventory, with: inventory
 
       click_button "Create Item"
 
-      expect(page).to have_content("Name can't be blank and Inventory can't be blank")
+      expect(page).to have_content("Name can't be blank, Inventory can't be blank, and Inventory is not a number")
       expect(page).to have_button("Create Item")
     end
   end
