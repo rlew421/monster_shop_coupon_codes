@@ -7,14 +7,14 @@ require 'rails_helper'
 
 RSpec.describe "as an admin" do
   it "when I visit a user's profile, I see the same info they see but I do not see the edit profile button" do
-    user_1 = User.create!(name: "Miss Solo", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user@user.com", password: "user", password_confirmation: "user")
+    user = User.create!(name: "Miss Solo", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user@user.com", password: "user", password_confirmation: "user")
     merchant_admin = User.create!(name: "Merchant Admin", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "merchant_admin@merchant_admin.com", password: "merchant_admin", password_confirmation: "merchant_admin", role: 2)
 
     admin = User.create!(name: "Admin", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "admin@admin.com", password: "admin", password_confirmation: "admin", role: 3)
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
 
-    visit "/admin/users/#{user_1.id}"
+    visit "/admin/users/#{user.id}"
 
     expect(page).to have_content(user.name)
     expect(page).to have_content(user.address)
