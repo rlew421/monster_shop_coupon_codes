@@ -1,5 +1,5 @@
 
-  <%= form_for @merchant, url: "/merchants/#{@merchant.id}", html: { method: :put } do |f| %>
+  <%= form_for @merchant, url: path do |f| %>
 
     <%= f.label :name %>
     <%= f.text_field :name %>

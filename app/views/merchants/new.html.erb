@@ -1,3 +1,4 @@
 <h1 align= "center">Create Merchant</h1>
 
-<%= render partial: 'form' %>
+<%= render partial: 'form', locals: { path: "/merchants",
+                                      method: :post } %>
