@@ -4,7 +4,7 @@
   <h2>Packaged:</h2>
   <% @orders.status("packaged").each do |order| %>
   <div id="order-<%= order.id %>">
-    <%= link_to "#{order.name}", "admin/users/#{order.user.id}/profile" %>
+    <%= link_to "#{order.name}", "admin/users/#{order.user.id}" %>
     <%= order.id %>
     <%= order.created_at.strftime('%m/%d/%Y') %>
     <%= link_to "Ship Order", "admin/orders/#{order.id}", method: :patch %>
@@ -16,7 +16,7 @@
   <h2>Pending:</h2>
   <% @orders.status("pending").each do |order| %>
     <div id="order-<%= order.id %>">
-      <%= link_to "#{order.name}", "admin/users/#{order.user.id}/profile" %>
+      <%= link_to "#{order.name}", "admin/users/#{order.user.id}" %>
       <%= order.id %>
       <%= order.created_at.strftime('%m/%d/%Y') %>
     </div>
@@ -27,7 +27,7 @@
   <h2>Shipped:</h2>
   <% @orders.status("shipped").each do |order| %>
   <div id="order-<%= order.id %>">
-    <%= link_to "#{order.name}", "admin/users/#{order.user.id}/profile" %>
+    <%= link_to "#{order.name}", "admin/users/#{order.user.id}" %>
     <%= order.id %>
     <%= order.created_at.strftime('%m/%d/%Y') %>
   </div>
@@ -38,7 +38,7 @@
   <h2>Cancelled:</h2>
   <% @orders.status("cancelled").each do |order| %>
   <div id="order-<%= order.id %>">
-    <%= link_to "#{order.name}", "admin/users/#{order.user.id}/profile" %>
+    <%= link_to "#{order.name}", "admin/users/#{order.user.id}" %>
     <%= order.id %>
     <%= order.created_at %>
   </div>
