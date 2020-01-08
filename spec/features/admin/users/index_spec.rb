@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe "as an admin" do
   before :each do
-    @user_1 = User.create!(name: "User", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user@user.com", password: "user", password_confirmation: "user")
-    @user_2 = User.create!(name: "User Two", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user2@user2.com", password: "user", password_confirmation: "user")
-    @user_3 = User.create!(name: "User Three", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user3@user3.com", password: "user", password_confirmation: "user")
-    @user_4 = User.create!(name: "User Four", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user4@user4.com", password: "user", password_confirmation: "user")
+    @user_1 = User.create!(name: "Miss Solo", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user@user.com", password: "user", password_confirmation: "user")
+    @user_2 = User.create!(name: "Mr. Two", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user2@user2.com", password: "user", password_confirmation: "user")
+    @user_3 = User.create!(name: "Senor Three", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user3@user3.com", password: "user", password_confirmation: "user")
+    @user_4 = User.create!(name: "Mrs. Four", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user4@user4.com", password: "user", password_confirmation: "user")
 
     @merchant_employee = User.create!(name: "Merchant Employee", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "merchant_employee@merchant_employee.com", password: "merchant_employee", password_confirmation: "merchant_employee", role: 1)
     @merchant_admin = User.create!(name: "Merchant Admin", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "merchant_admin@merchant_admin.com", password: "merchant_admin", password_confirmation: "merchant_admin", role: 2)
@@ -46,7 +46,7 @@ RSpec.describe "as an admin" do
 
     visit '/admin/users'
 
-    within "user-#{@user_1.id}" do
+    within "#user-#{@user_1.id}" do
       expect(page).to have_link(@user_1.name)
       expect(page).to have_content(@user_1.created_at)
       expect(page).to have_content(@user_1.role)
@@ -55,7 +55,7 @@ RSpec.describe "as an admin" do
       expect(page).to_not have_content(@user_4.name)
     end
 
-    within "user-#{@user_2.id}" do
+    within "#user-#{@user_2.id}" do
       expect(page).to have_link(@user_2.name)
       expect(page).to have_content(@user_2.created_at)
       expect(page).to have_content(@user_2.role)
@@ -64,7 +64,7 @@ RSpec.describe "as an admin" do
       expect(page).to_not have_content(@user_4.name)
     end
 
-    within "user-#{@merchant_admin.id}" do
+    within "#user-#{@merchant_admin.id}" do
       expect(page).to have_link(@merchant_admin.name)
       expect(page).to have_content(@merchant_admin.created_at)
       expect(page).to have_content(@merchant_admin.role)
@@ -73,13 +73,14 @@ RSpec.describe "as an admin" do
       expect(page).to_not have_content(@user_4.name)
     end
 
-    within "user-#{@admin_2.id}" do
+    within "#user-#{@admin_2.id}" do
       expect(page).to have_link(@admin_2.name)
       expect(page).to have_content(@admin_2.created_at)
       expect(page).to have_content(@admin_2.role)
       expect(page).to_not have_content(@user_1.name)
       expect(page).to_not have_content(@user_3.name)
       expect(page).to_not have_content(@user_4.name)
+      expect(page).to_not have_link("Edit #{@admin_2.name}'s Profile")
     end
   end
 end

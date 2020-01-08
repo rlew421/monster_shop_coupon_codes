@@ -5,8 +5,10 @@
     <%= link_to "#{user.name}", "admin/users/#{user.id}" %>
     Registered: <%= user.created_at %>
     User Type: <%= user.role %>
-    <%= link_to "Edit #{user.name}'s Profile", "/admin/users/#{user.id}/profile/edit" %>
-    <%= link_to "Edit #{user.name}'s Password", "/admin/users/#{user.id}/password/edit" %>
+    <% if user.role != "admin" %>
+      <%= link_to "Edit #{user.name}'s Profile", "/admin/users/#{user.id}/profile/edit" %>
+      <%= link_to "Edit #{user.name}'s Password", "/admin/users/#{user.id}/password/edit" %>
+    <% end %>
     <% if user.role == "user" %>
       <%= link_to "Upgrade #{user.name} to Merchant Employee", "/admin/users/#{user.id}/upgrade_to_merchant_employee" %>
       <%= link_to "Upgrade #{user.name} to Merchant Admin", "/admin/users/#{user.id}/upgrade_to_merchant_admin" %>
