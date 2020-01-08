@@ -8,7 +8,6 @@
 <h2>Zip: <%= @user.zip %></h2>
 <h2>Email: <%= @user.email %></h2>
 
-<%= link_to "Edit #{@user.name}'s Profile", "/admin/users/#{@user.id}/profile/edit" %>
 <%= link_to "Edit #{@user.name}'s Password", "/admin/users/#{@user.id}/password/edit" %>
 <%= link_to "Upgrade #{@user.name} to Merchant Employee", "/admin/users/#{@user.id}/upgrade_to_merchant_employee" %>
 <%= link_to "Upgrade #{@user.name} to Merchant Admin", "/admin/users/#{@user.id}/upgrade_to_merchant_admin" %>

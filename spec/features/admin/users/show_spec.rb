@@ -22,5 +22,7 @@ RSpec.describe "as an admin" do
     expect(page).to have_content(user.state)
     expect(page).to have_content(user.zip)
     expect(page).to have_content(user.email)
+    expect(page).to have_link("Edit #{user.name}'s Password")
+    expect(page).to_not have_link("Edit #{user.name}'s Profile")
   end
 end
