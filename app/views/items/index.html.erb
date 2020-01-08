@@ -1,4 +1,4 @@
-<% if @merchant %>
+  <% if current_user && current_user.merchant_admin? %>
   <h1><%= link_to @merchant.name, "/merchants/#{@merchant.id}"%><span> Items</span></h1>
   <p align="center"><%= link_to "Add New Item", "/merchants/#{@merchant.id}/items/new" %></p>
 <% else %>
@@ -35,13 +35,17 @@
       <p>Inventory: <%= item.inventory %> </p>
       <% if item.active? %>
         <p>Item status: Active</p>
-        <%= button_to "Deactivate #{item.name}", "/merchants/#{item.merchant.id}/items/#{item.id}", method: :patch %>
+          <% if current_user && current_user.merchant_admin? %>
+            <%= button_to "Deactivate #{item.name}", "/merchants/#{item.merchant.id}/items/#{item.id}", method: :patch %>
+          <% end %>
       <% else %>
         <p>Item status: Inactive</p>
-        <%= button_to "Enable #{item.name}", "/merchants/#{item.merchant.id}/items/#{item.id}", method: :patch %>
-      <% end %>
-      <% if item.no_orders? %>
-        <%= button_to "Delete #{item.name}", "/merchants/#{item.merchant.id}/items/#{item.id}", method: :delete %>
+          <% if current_user && current_user.merchant_admin?%>
+            <%= button_to "Enable #{item.name}", "/merchants/#{item.merchant.id}/items/#{item.id}", method: :patch %>
+          <% if item.no_orders? %>
+            <%= button_to "Delete #{item.name}", "/merchants/#{item.merchant.id}/items/#{item.id}", method: :delete %>
+            <% end %>
+        <% end %>
       <% end %>
     </section>
     <% end %>
