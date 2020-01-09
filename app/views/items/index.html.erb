@@ -36,8 +36,10 @@
       <% end %>
       <% if item.active? %>
         <p>Active</p>
+        <h3><%= link_to 'Edit Item', "/merchants/#{item.merchant.id}/items/#{item.id}/edit" %></h3>
       <% else %>
         <p>Inactive</p>
+        <h3><%= link_to 'Edit Item', "/merchants/#{item.merchant.id}/items/#{item.id}/edit" %></h3>
       <% end %>
     </section>
     <% end %>
