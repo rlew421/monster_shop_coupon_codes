@@ -1,5 +1,4 @@
 <h1>Edit <%=link_to @merchant.name, "/merchants/#{@merchant.id}" %></h1>
 <center>
-  <%= render partial: 'form', locals: { path: "/merchants/#{@merchant.id}",
-                                       method: :patch} %>
+  <%= render partial: 'form', locals: { path: "/merchants/#{@merchant.id}" } %>
 </center>
