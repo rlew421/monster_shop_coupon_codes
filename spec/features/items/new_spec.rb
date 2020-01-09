@@ -4,6 +4,8 @@ RSpec.describe "Create Merchant Items" do
   describe "When I visit the merchant items index page" do
     before(:each) do
       @brian = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
+      @merchant_admin = @brian.users.create!(name: "Merchant Admin", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "merchant_admin@merchant_admin.com", password: "merchant_admin", password_confirmation: "merchant_admin", role: 2)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_admin)
     end
 
     it 'I see a link to add a new item for that merchant' do
