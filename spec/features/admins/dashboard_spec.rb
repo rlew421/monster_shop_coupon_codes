@@ -63,7 +63,7 @@ RSpec.describe "admin dashboard" do
       click_on "#{@order_3.name}"
     end
 
-    expect(current_path).to eq("/admin/users/#{@order_3.user.id}/profile")
+    expect(current_path).to eq("/admin/users/#{@order_3.user.id}")
   end
 
   it "has a button next to all packaged orders for the admin to ship the order" do
