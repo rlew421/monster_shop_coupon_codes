@@ -61,6 +61,19 @@ RSpec.describe 'admin can perform the same actions that a user can and also chan
         expect(page).to have_content("Changed Name")
         expect(page).to_not have_content("User 1")
       end
+
+      user_1.reload
+
+      visit "/admin/users"
+
+      within "#user-#{user_1.id}" do
+        click_link("Edit #{user_1.name}'s Profile")
+      end
+
+      fill_in :name, with: ""
+      click_button "Update #{user_1.name}'s Profile"
+
+      expect(page).to have_content("Name can't be blank")
     end
 
     it "I can edit a default user's password" do
