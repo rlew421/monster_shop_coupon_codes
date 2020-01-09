@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   get "/merchants/:merchant_id/items", to: "items#index"
   get "/merchants/:merchant_id/items/new", to: "items#new"
   post "/merchants/:merchant_id/items", to: "items#create"
+  get 'merchants/:merchant_id/items/:items_id/edit', to: "items#edit"
+  patch 'merchants/:merchant_id/items/:items_id', to: "items#update"
   delete "/items/:id", to: "items#destroy"
 
   get "/items/:item_id/reviews/new", to: "reviews#new"
@@ -59,6 +61,8 @@ Rails.application.routes.draw do
     get '/orders/:id', to: 'orders#show'
     get '/:merchant_id/items/new', to: "items#new"
     post '/:merchant_id/items', to: "items#create"
+    # get '/:merchant_id/:items_id/edit', to: "items#edit"
+    # patch '/:merchant_id/:items_id', to: "items#update"
   end
 
   namespace :admin do
