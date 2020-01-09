@@ -1,4 +1,4 @@
-<h1>Create New Item For <%=link_to @merchant.name, "/merchants/#{@merchant.id}" %></h1>
+<h1>Create New Item For <%=link_to @item.merchant.name, "/merchants/#{@item.merchant.id}" %></h1>
 <center>
-  <%= render partial: 'form', locals: {path: "/merchants/#{@merchant.id}/items"} %>
+  <%= render partial: 'form', locals: {path: "/merchants/#{@item.merchant.id}/items"} %>
 </center>
