@@ -1,55 +1,41 @@
 # Monster Shop
-BE Mod 2 Week 4/5 Group Project (Part 1)
 
 ## Background and Description
 
-"Monster Shop" is a fictitious e-commerce platform where users can register to place items into a shopping cart and 'check out'. Users who work for a merchant can mark their items as 'fulfilled'; the last merchant to mark items in an order as 'fulfilled' will automatically set the order status to "shipped". Each user role will have access to some or all CRUD functionality for application models.
+BE Mod 2 Week 4/5 Group Project
 
-Students will be put into 3 or 4 person groups to complete the project.\n
+Monster Shop is a fictional e-commerce application built using Rails v5.1.7. The application consists of merchants that list items for sale, users who can add items to their cart and checkout, orders that can be fulfilled by the merchants, and admins who have the ability to mimic functionality of other users. The application utilizes authorization and authentication to limit permissions to certain functionality based on user role. Merchants have full CRUD functionality over their items and registered users can create and update their user account.
 
-## Learning Goals
+## Getting Started
 
-### Rails
-* Create routes for namespaced routes
-* Implement partials to break a page into reusable components
-* Use Sessions to store information about a user and implement login/logout functionality
-* Use filters (e.g. `before_action`) in a Rails controller
-* Limit functionality to authorized users
-* Use BCrypt to hash user passwords before storing in the database
+1. Clone this repository.
 
-### ActiveRecord
-* Use built-in ActiveRecord methods to join multiple tables of data, calculate statistics and build collections of data grouped by one or more attributes
+```
+git clone git@github.com:LainMcGrath/monster_shop_part_1.git
+```
+2. Navigate into directory and run:
 
-### Databases
-* Design and diagram a Database Schema
-* Write raw SQL queries (as a debugging tool for AR)
+```
+bundle install
+```
+3. Set up the databases:
 
-## Requirements
+```
+rake db:{create,migrate,seed}
+```
+4. To run test suite:
 
-- must use Rails 5.1.x
-- must use PostgreSQL
-- must use 'bcrypt' for authentication
-- all controller and model code must be tested via feature tests and model tests, respectively
-- must use good GitHub branching, team code reviews via GitHub comments, and use of a project planning tool like github projects
-- must include a thorough README to describe their project
+```
+rspec
+```
 
-## Permitted
+## Schema Design
 
-- use FactoryBot to speed up your test development
-- use "rails generators" to speed up your app development
-
-## Not Permitted
-
-- do not use JavaScript for pagination or sorting controls
-
-## Permission
-
-- if there is a specific gem you'd like to use in the project, please get permission from your instructors first
 
 ## User Roles
 
 1. Visitor - this type of user is anonymously browsing our site and is not logged in
-1. Regular User - this user is registered and logged in to the application while performing their work; can place items in a cart and create an order
+1. Registered User - this user is registered and logged in to the application while performing their work; can place items in a cart and create an order
 1. Merchant Employee - this user works for a merchant. They can fulfill orders on behalf of their merchant. They also have the same permissions as a regular user (adding items to a cart and checking out)
 3. Merchant Admin - this user works for a merchant, and has additional capabilities than regular employees, such as changing merchant info.
 3. Admin User - a registered user who has "superuser" access to all areas of the application; user is logged in to perform their work
@@ -61,42 +47,19 @@ Students will be put into 3 or 4 person groups to complete the project.\n
 3. 'shipped' means an admin has 'shipped' a package and can no longer be cancelled by a user
 4. 'cancelled' - only 'pending' and 'packaged' orders can be cancelled
 
-## Timeframe
-The following is an anticipated timeline of how these stories should be completed in order to be finished by 12/23/19
+## Heroku
 
-* Monday: Story 1 && Story 10 - Story 12
-* Tuesday: Story 13 - Story 16
-* Wednesday: Story 2 - Story 9
-* Thursday: Story 17 - Story 22
-* Friday: Story 23 - Story 26
-* Saturday: Story 27 - Story 30
-* Sunday: Story 31 - Story 33
-* Monday: Story 34 - Story 37
+[Link to Heroku App](https://stark-inlet-57111.herokuapp.com/)
 
+## Contributors
 
-## Not Everything can be FULLY Deleted
+- [Dylan Connolly](https://github.com/dylanconnolly)
+- [Lain McGrath](https://github.com/LainMcGrath)
+- [Rachel Lew](https://github.com/rlew421)
+- [Santiago Caraveo](https://github.com/Santiag0C)
 
-In the user stories, we talk about "CRUD" functionality. However, it's rare in a real production system to ever truly delete content, and instead we typically just 'enable' or 'disable' content. Users, items and orders can be 'enabled' or 'disabled' which blocks functionality (users whose accounts are disabled should not be allowed to log in, items which are disabled cannot be ordered, orders which are disabled cannot be processed, and so on).
-
-Disabled content should also be restricted from showing up in the statistics pages. For example: if an item is disabled, it should not appear in a list of "popular items".
-
-Be careful to watch out for which stories allow full deletion of content, and restrictions on when they apply.
-
-## Deploying to Heroku
-
-```
-[ ] done
-
-User Story 1, Deploy your application to Heroku
-
-As a visitor or user of the site
-I will perform all user stories
-By visiting the application on Heroku.
-Localhost is fine for development, but
-the application must be hosted on Heroku.
-```
-
----
+User Stories
+===
 
 ## Navigation
 This series of stories will set up a navigation bar at the top of the screen and present links and information to users of your site.
@@ -712,7 +675,7 @@ Then all of that merchant's items should be deactivated
 
 User Story 40, Admin enables a merchant account
 
-As an admin 
+As an admin
 When I visit the merchant index page
 I see an "enable" button next to any merchants whose accounts are disabled
 When I click on the "enable" button
@@ -747,7 +710,7 @@ User Story 42, Merchant deactivates an item
 
 As a merchant
 When I visit my items page
-I see all of my items with the following info: 
+I see all of my items with the following info:
  - name
 - description
 - price
@@ -873,7 +836,7 @@ Admin can ship orders (taken care of in user story 33). Admin can fulfill items 
 
 User Story 49, Merchant sees an order show page
 
-As a merchant 
+As a merchant
 When I visit an order show page from my dashboard
 I see the customer's name and address
 I only see the items in the order that are being purchased from my merchant
@@ -890,7 +853,7 @@ For each item, I see the following information:
 
 User Story 50, Merchant fulfills part of an order
 
-As a merchant 
+As a merchant
 When I visit an order show page from my dashboard
 For each item of mine in the order
 If the user's desired quantity is equal to or less than my current inventory quantity for that item
@@ -909,7 +872,7 @@ If I have already fulfilled this item, I see text indicating such.
 
 User Story 51, Merchant cannot fulfill an order due to lack of inventory
 
-As a merchant 
+As a merchant
 When I visit an order show page from my dashboard
 For each item of mine in the order
 If the user's desired quantity is greater than my current inventory quantity for that item
@@ -1079,7 +1042,7 @@ All content rules still apply (eg, item name cannot be blank, etc)
 User Story 62, EXTENSION: Admin can fulfill order items on behalf of a merchant
 
 As an admin user
-When I visit a Merchant's order show page 
+When I visit a Merchant's order show page
 For each item in the order
 If the user's desired quantity is less than the merchant's current inventory
 I can fulfill that item
