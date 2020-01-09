@@ -1,0 +1,14 @@
+<center>
+  <%= form_for @review, url: path do |f| %>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+
+    <%= f.label :content %>
+    <%= f.text_field :content %>
+
+    <%= f.label :rating %>
+    <%= f.text_field :rating %>
+
+    <%= f.submit %>
+  <% end %>
+</center>
