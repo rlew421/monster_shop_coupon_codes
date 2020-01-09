@@ -1,5 +1,5 @@
 
-class Order <ApplicationRecord
+class Order < ApplicationRecord
   has_many :item_orders
   has_many :items, through: :item_orders
   belongs_to :user
@@ -29,10 +29,7 @@ class Order <ApplicationRecord
     where(status: "#{status_searching_for}")
   end
 
-  def fulfill
-    current_order = Order.find(self.id)
-    if current_order.item_orders.all?{|item_order| item_order[:status] == 'fulfilled' }
-      current_order.update(status: 1)
-    end
+  def self.fulfill(order_id)
+    Order.where(id: order_id).update(status: 1)
   end
 end
