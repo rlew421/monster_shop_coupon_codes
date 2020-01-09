@@ -45,7 +45,13 @@
       <td><p><%= number_to_currency(item_order.price)%></p></td>
       <td><p><%= item_order.quantity%></p></td>
       <td><p><%= number_to_currency(item_order.subtotal)%></p></td>
-      <td><p><%= link_to "Fulfill #{item_order.item.name}", "/merchant/item_orders/#{item_order.item.id}/fulfill"%></p></td>
+      <% if item_order.quantity <= item_order.item.inventory && item_order.status == 'unfulfilled'%>
+        <td><p><%= link_to "Fulfill #{item_order.item.name}", "/merchant/orders/#{@order.id}/item_orders/#{item_order.id}/fulfill"%></p></td>
+      <% elsif item_order.quantity > item_order.item.inventory %>
+        <td><p>You do not have enough inventory to fulfill <%= item_order.item.name %></p></td>
+      <% elsif item_order.status == 'fulfilled'%>
+      <td><p>Fulfilled</p></td>
+      <% end %>
     </tr>
   <% end %>
 </table>
