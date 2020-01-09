@@ -42,9 +42,11 @@
         <p>Item status: Inactive</p>
           <% if current_user && current_user.merchant_admin?%>
             <%= button_to "Enable #{item.name}", "/merchants/#{item.merchant.id}/items/#{item.id}", method: :patch %>
-          <% if item.no_orders? %>
-            <%= button_to "Delete #{item.name}", "/merchants/#{item.merchant.id}/items/#{item.id}", method: :delete %>
-          <% end %>
+        <% end %>
+      <% end %>
+      <% if item.no_orders? %>
+        <% if current_user && current_user.merchant_admin?%>
+          <%= button_to "Delete #{item.name}", "/merchants/#{item.merchant.id}/items/#{item.id}", method: :delete %>
         <% end %>
       <% end %>
     </section>

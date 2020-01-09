@@ -66,12 +66,16 @@ describe Order, type: :model do
 
     it "fulfill" do
       user = User.create!(name: "User", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user2@user.com", password: "user", password_confirmation: "user")
-      order_1 = user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 1)
+      order_1 = user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
       order_2 = user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
 
-      order_1.fulfill
+      expect(order_1.status).to eq('pending')
+      expect(order_2.status).to eq('pending')
+
+      Order.fulfill(order_1.id)
       order_1.reload
       order_2.reload
+
       expect(order_1.status).to eq('packaged')
       expect(order_2.status).to eq('pending')
     end

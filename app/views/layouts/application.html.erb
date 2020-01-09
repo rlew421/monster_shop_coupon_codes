@@ -29,7 +29,7 @@
           <%= link_to "Dashboard", "/merchant" %>
         <% elsif current_user.admin? %>
           <%= link_to "Dashboard", "/admin" %>
-          <%= link_to "See All Users", "/admin/users" %>
+          <%= link_to "Users", "/admin/users" %>
         <% end %>
         <%= link_to "Log Out", "/logout", method: :delete %>
         <p>Logged in as <%= current_user.name %></p>
