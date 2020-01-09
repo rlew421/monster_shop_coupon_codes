@@ -9,13 +9,13 @@ RSpec.describe "Create Merchant Items" do
     end
 
     it 'I see a link to add a new item for that merchant' do
-      visit "/merchants/#{@brian.id}/items"
+      visit "/merchant/items"
 
       expect(page).to have_link "Add New Item"
     end
 
     it 'I can add a new item by filling out a form' do
-      visit "/merchants/#{@brian.id}/items"
+      visit "/merchant/items"
 
       name = "Chamois Buttr"
       price = 18
@@ -54,7 +54,7 @@ RSpec.describe "Create Merchant Items" do
     end
 
     it 'I get an alert if I dont fully fill out the form' do
-      visit "/merchants/#{@brian.id}/items"
+      visit "/merchant/items"
 
       name = ""
       price = 18
