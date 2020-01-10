@@ -18,7 +18,8 @@ Rails.application.routes.draw do
   get "/merchants/:merchant_id/items/new", to: "items#new"
   post "/merchants/:merchant_id/items", to: "items#create"
   get 'merchants/:merchant_id/items/:items_id/edit', to: "items#edit"
-  patch 'merchants/:merchant_id/items/:items_id', to: "items#update"
+  patch 'merchants/:merchant_id/items/:item_id', to: "merchant/items#update"
+  delete 'merchants/:merchant_id/items/:item_id', to: "merchant/items#destroy"
   delete "/items/:id", to: "items#destroy"
 
   get "/items/:item_id/reviews/new", to: "reviews#new"
@@ -63,6 +64,7 @@ Rails.application.routes.draw do
     post '/:merchant_id/items', to: "items#create"
     # get '/:merchant_id/:items_id/edit', to: "items#edit"
     # patch '/:merchant_id/:items_id', to: "items#update"
+    get '/orders/:order_id/item_orders/:item_order_id/fulfill', to: 'item_orders#fulfill'
   end
 
   namespace :admin do
@@ -71,7 +73,7 @@ Rails.application.routes.draw do
     patch '/merchants/:merchant_id', to: 'merchants#update'
     get '/merchants/:merchant_id', to: "merchants#show"
     get '/users', to: "users#index"
-    get '/users/:id/profile', to: "users#show"
+    get '/users/:user_id/', to: "users#show"
     get '/users/:user_id/profile/edit', to: "users#edit"
     patch '/users/:user_id/profile', to: "users#update"
     get '/users/:user_id/password/edit', to: "users#edit"

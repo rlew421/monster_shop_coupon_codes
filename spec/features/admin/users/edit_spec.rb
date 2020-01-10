@@ -34,11 +34,10 @@ RSpec.describe 'admin can perform the same actions that a user can and also chan
       visit '/'
 
       within 'nav' do
-        click_link "See All Users"
+        click_link "Users"
       end
 
       expect(current_path).to eq('/admin/users')
-      expect(page).to_not have_content(merchant_admin.name)
 
       within "#user-#{user_1.id}" do
         click_link("Edit #{user_1.name}'s Profile")
@@ -62,6 +61,19 @@ RSpec.describe 'admin can perform the same actions that a user can and also chan
         expect(page).to have_content("Changed Name")
         expect(page).to_not have_content("User 1")
       end
+
+      user_1.reload
+
+      visit "/admin/users"
+
+      within "#user-#{user_1.id}" do
+        click_link("Edit #{user_1.name}'s Profile")
+      end
+
+      fill_in :name, with: ""
+      click_button "Update #{user_1.name}'s Profile"
+
+      expect(page).to have_content("Name can't be blank")
     end
 
     it "I can edit a default user's password" do
@@ -138,15 +150,19 @@ RSpec.describe 'admin can perform the same actions that a user can and also chan
         click_link("Upgrade #{user_1.name} to Merchant Employee")
       end
 
+      user_1.reload
+
       expect(current_path).to eq('/admin/users')
-      expect(page).to_not have_css("#user-#{user_1.id}")
+      expect(user_1.role).to eq("merchant_employee")
 
       within "#user-#{user_2.id}" do
         click_link("Upgrade #{user_2.name} to Merchant Admin")
       end
 
+      user_2.reload
+
       expect(current_path).to eq('/admin/users')
-      expect(page).to_not have_css("#user-#{user_2.id}")
+      expect(user_2.role).to eq("merchant_admin")
     end
   end
 end

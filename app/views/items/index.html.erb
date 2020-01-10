@@ -1,9 +1,9 @@
 <% if @merchant %>
   <h1><%= link_to @merchant.name, "/merchants/#{@merchant.id}"%><span> Items</span></h1>
-  <p align="center"><%= link_to "Add New Item", "/merchants/#{@merchant.id}/items/new" %></p>
 <% else %>
   <h1>All Items</h1>
 <% end %>
+
 <% if @items.popular != [] %>
   <section id="most-popular">
     <p>The Hottest Items on the Shelves!</p>
@@ -30,16 +30,27 @@
       <p>Sold by: <%=link_to item.merchant.name, "/merchants/#{item.merchant.id}" %></p>
       <%= link_to image_tag("#{item.image}"), "/items/#{item.id}", id: "#{item.id}-photo"%>
       <p> <%= item.description unless @merchant%> </p>
-      <p>Price: <%=number_to_currency(item.price) %> </p>
-      <p>Inventory: <%= item.inventory %> </p>
-      <% if !@merchant %>
-      <% end %>
+      <p>Item name: <%= item.name %></p>
+      <p>Item description: <%= item.description %></p>
+      <p>Item price: <%=number_to_currency(item.price) %> </p>
+      <p>Item inventory: <%= item.inventory %> </p>
       <% if item.active? %>
-        <p>Active</p>
-        <h3><%= link_to 'Edit Item', "/merchants/#{item.merchant.id}/items/#{item.id}/edit" %></h3>
+        <p>Item status: Active</p>
+          <% if current_user && current_user.merchant_admin? %>
+            <%= button_to "Deactivate #{item.name}", "/merchants/#{item.merchant.id}/items/#{item.id}", method: :patch %>
+            <%= link_to 'Edit Item', "/merchants/#{item.merchant.id}/items/#{item.id}/edit" %>
+          <% end %>
       <% else %>
-        <p>Inactive</p>
-        <h3><%= link_to 'Edit Item', "/merchants/#{item.merchant.id}/items/#{item.id}/edit" %></h3>
+        <p>Item status: Inactive</p>
+          <% if current_user && current_user.merchant_admin?%>
+            <%= button_to "Enable #{item.name}", "/merchants/#{item.merchant.id}/items/#{item.id}", method: :patch %>
+            <%= link_to 'Edit Item', "/merchants/#{item.merchant.id}/items/#{item.id}/edit" %>
+        <% end %>
+      <% end %>
+      <% if item.no_orders? %>
+        <% if current_user && current_user.merchant_admin?%>
+          <%= button_to "Delete #{item.name}", "/merchants/#{item.merchant.id}/items/#{item.id}", method: :delete %>
+        <% end %>
       <% end %>
     </section>
     <% end %>

@@ -1,7 +1,8 @@
 class ReviewsController<ApplicationController
 
   def new
-    @item = Item.find(params[:item_id])
+    item = Item.find(params[:item_id])
+    @review = item.reviews.new
   end
 
   def create
@@ -10,11 +11,11 @@ class ReviewsController<ApplicationController
       flash[:error] = "Please fill in all fields in order to create a review."
       redirect_to "/items/#{item.id}/reviews/new"
     else
-      @item = Item.find(params[:item_id])
-      review = @item.reviews.create(review_params)
-      if review.save
+      item = Item.find(params[:item_id])
+      @review = item.reviews.create(review_params)
+      if @review.save
         flash[:success] = "Review successfully created"
-        redirect_to "/items/#{@item.id}"
+        redirect_to "/items/#{@review.item.id}"
       else
         flash[:error] = "Rating must be between 1 and 5"
         render :new
@@ -27,22 +28,21 @@ class ReviewsController<ApplicationController
   end
 
   def update
-    review = Review.find(params[:id])
-    review.update(review_params)
-    redirect_to "/items/#{review.item.id}"
+    @review = Review.find(params[:id])
+    @review.update(review_params)
+    redirect_to "/items/#{@review.item.id}"
   end
 
   def destroy
     review = Review.find(params[:id])
-    item = review.item
     review.destroy
-    redirect_to "/items/#{item.id}"
+    redirect_to "/items/#{review.item.id}"
   end
 
   private
 
   def review_params
-    params.permit(:title,:content,:rating)
+    params.require(:review).permit(:title,:content,:rating)
   end
 
   def field_empty?

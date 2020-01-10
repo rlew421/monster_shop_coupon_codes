@@ -16,6 +16,7 @@ RSpec.describe 'review creation', type: :feature do
       expect(current_path).to eq("/items/#{@chain.id}/reviews/new")
     end
     describe "and click on a link to add a review" do
+
       it "I can create a new review by following the link" do
         title = "Thanks Brian's Bike Shop!"
         content = "Took my bike in for a service and all is working well!"
@@ -25,9 +26,9 @@ RSpec.describe 'review creation', type: :feature do
 
         click_on "Add Review"
 
-        fill_in :title, with: title
-        fill_in :content, with: content
-        fill_in :rating, with: rating
+        fill_in 'Title', with: title
+        fill_in 'Content', with: content
+        fill_in 'Rating', with: rating
 
         click_button "Create Review"
 
@@ -51,8 +52,8 @@ RSpec.describe 'review creation', type: :feature do
 
         click_on "Add Review"
 
-        fill_in :title, with: title
-        fill_in :rating, with: rating
+        fill_in 'Title', with: title
+        fill_in 'Rating', with: rating
 
         click_on "Create Review"
 
@@ -69,9 +70,9 @@ RSpec.describe 'review creation', type: :feature do
 
         click_on "Add Review"
 
-        fill_in :title, with: title
-        fill_in :content, with: content
-        fill_in :rating, with: rating
+        fill_in 'Title', with: title
+        fill_in 'Content', with: content
+        fill_in 'Rating', with: rating
 
         click_on "Create Review"
 
