@@ -17,29 +17,29 @@ RSpec.describe "Merchant Items Index Page" do
 
       within "#item-#{@tire.id}" do
         expect(page).to have_content(@tire.name)
-        expect(page).to have_content("Price: $#{@tire.price}")
+        expect(page).to have_content("Item price: $100.00")
         expect(page).to have_css("img[src*='#{@tire.image}']")
         expect(page).to have_content("Active")
-        expect(page).to_not have_content(@tire.description)
-        expect(page).to have_content("Inventory: #{@tire.inventory}")
+        expect(page).to have_content("Item description: #{@tire.description}")
+        expect(page).to have_content("Item inventory: #{@tire.inventory}")
       end
 
       within "#item-#{@chain.id}" do
         expect(page).to have_content(@chain.name)
-        expect(page).to have_content("Price: $#{@chain.price}")
+        expect(page).to have_content("Item price: $50.00")
         expect(page).to have_css("img[src*='#{@chain.image}']")
         expect(page).to have_content("Active")
-        expect(page).to_not have_content(@chain.description)
-        expect(page).to have_content("Inventory: #{@chain.inventory}")
+        expect(page).to have_content("Item description: #{@chain.description}")
+        expect(page).to have_content("Item inventory: #{@chain.inventory}")
       end
 
       within "#item-#{@shifter.id}" do
         expect(page).to have_content(@shifter.name)
-        expect(page).to have_content("Price: $#{@shifter.price}")
+        expect(page).to have_content("Item price: $180.00")
         expect(page).to have_css("img[src*='#{@shifter.image}']")
         expect(page).to have_content("Inactive")
-        expect(page).to_not have_content(@shifter.description)
-        expect(page).to have_content("Inventory: #{@shifter.inventory}")
+        expect(page).to have_content("Item description: #{@shifter.description}")
+        expect(page).to have_content("Item inventory: #{@shifter.inventory}")
       end
     end
 

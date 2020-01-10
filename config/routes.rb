@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   get "/merchants/:merchant_id/items", to: "items#index"
   get "/merchants/:merchant_id/items/new", to: "items#new"
   post "/merchants/:merchant_id/items", to: "items#create"
+  get 'merchants/:merchant_id/items/:items_id/edit', to: "items#edit"
   patch 'merchants/:merchant_id/items/:item_id', to: "merchant/items#update"
   delete 'merchants/:merchant_id/items/:item_id', to: "merchant/items#destroy"
   delete "/items/:id", to: "items#destroy"
@@ -57,8 +58,12 @@ Rails.application.routes.draw do
 
   namespace :merchant do
     get '/', to: "merchant#show"
-    get '/items', to: "items#index"
+    get '/:merchant_id/items', to: "items#index"
     get '/orders/:id', to: 'orders#show'
+    get '/:merchant_id/items/new', to: "items#new"
+    post '/:merchant_id/items', to: "items#create"
+    # get '/:merchant_id/:items_id/edit', to: "items#edit"
+    # patch '/:merchant_id/:items_id', to: "items#update"
     get '/orders/:order_id/item_orders/:item_order_id/fulfill', to: 'item_orders#fulfill'
   end
 

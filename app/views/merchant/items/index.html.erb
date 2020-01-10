@@ -1,44 +1,31 @@
-<h1><%= link_to @merchant.name, "/merchants/#{@merchant.id}"%><span> Items</span></h1>
-<p align="center"><%= link_to "Add New Item", "/merchants/#{@merchant.id}/items/new" %></p>
+<%= link_to "New Item", "/merchant/#{@merchant.id}/items/new", method: :get %>
 
-<% if @merchant.items.popular != [] %>
-  <section id="most-popular">
-    <p>The Hottest Items on the Shelves!</p>
-    <ol>
-      <% @merchant.items.popular.each do |item| %>
-        <li> <%= item.name %> - Quantity ordered: <%= item.total_quantity %></li>
-      <% end %>
-    </ol>
-  </section>
-  <section id="least-popular">
-    <p>The Coldest Items on the Shelves!</p>
-    <ol>
-      <% @merchant.items.popular("asc").each do |item| %>
-        <li> <%= item.name %> - Quantity ordered: <%= item.total_quantity %></li>
-      <% end %>
-    </ol>
-  </section>
-<% end %>
+
+  <h1>All Items</h1>
 
 <section class="grid-container">
   <% @merchant.items.each do |item| %>
-    <section class ="grid-item" id= "item-<%=item.id%>">
-      <%= link_to item.name, "/items/#{item.id}" %>
+    <section class = "grid-item" id= 'item-<%=item.id%>'>
+      <h2> <%=link_to item.name, "/items/#{item.id}" %> </h2>
+      <p>Sold by: <%=link_to item.merchant.name, "/merchants/#{item.merchant.id}" %></p>
+      <%= link_to image_tag("#{item.image}"), "/items/#{item.id}", id: "#{item.id}-photo"%>
+      <p> <%= item.description unless @merchant%> </p>
       <p>Item name: <%= item.name %></p>
       <p>Item description: <%= item.description %></p>
-      <p>Item price: <%= item.price %></p>
-      <%= link_to image_tag("#{item.image}"), "/items/#{item.id}", id: "#{item.id}-photo" %>
-      <p>Item inventory: <%= item.inventory %></p>
-        <% if item.active? %>
-          <p>Item status: Active</p>
-            <%= button_to "Deactivate #{item.name}", "/merchants/#{item.merchant.id}/items/#{item.id}", method: :patch %>
-        <% else %>
-          <p>Item status: Inactive</p>
-            <%= button_to "Enable #{item.name}", "/merchants/#{item.merchant.id}/items/#{item.id}", method: :patch %>
-        <% end %>
+      <p>Item price: <%=number_to_currency(item.price) %> </p>
+      <p>Item inventory: <%= item.inventory %> </p>
+      <% if !@merchant %>
+      <% end %>
+      <% if item.active? %>
+        <p>Item status: Active</p>
+        <h3><%= link_to 'Edit Item', "/merchants/#{@merchant.id}/items/#{item.id}/edit", method: :patch %></h3>
+      <% else %>
+        <p>Item status: Inactive</p>
+        <h3><%= link_to 'Edit Item', "/merchants/#{@merchant.id}/items/#{item.id}/edit", method: :patch %></h3>
+      <% end %>
       <% if item.no_orders? %>
         <%= button_to "Delete #{item.name}", "/merchants/#{item.merchant.id}/items/#{item.id}", method: :delete %>
       <% end %>
     </section>
-  <% end %>
+    <% end %>
 </section>
