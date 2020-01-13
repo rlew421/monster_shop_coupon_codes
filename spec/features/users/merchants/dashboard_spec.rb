@@ -68,6 +68,19 @@ RSpec.describe "merchant dashboard" do
         expect(current_path).to eq("/merchant/orders/#{order_1.id}")
       end
     end
+    
+    it "displays a link that takes me to a page where I can manage my coupons" do
+      bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+      merchant_admin = bike_shop.users.create!(name: "Merchant Admin", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "merchant_admin@merchant_admin.com", password: "merchant_admin", password_confirmation: "merchant_admin", role: 2)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_admin)
+
+      visit '/merchant'
+
+      click_link "Manage Coupons"
+
+      expect(current_path).to eq('/merchant/coupons')
+    end
   end
 
   describe "as a merchant employee" do
