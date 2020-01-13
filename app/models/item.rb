@@ -7,12 +7,11 @@ class Item <ApplicationRecord
   validates_presence_of :name,
                         :description,
                         :price,
-                        :image,
                         :inventory
   validates_inclusion_of :active?, :in => [true, false]
   validates_numericality_of :price, greater_than: 0
-
-
+  validates_numericality_of :inventory, greater_than: -1
+  # validates_presence_of :image, optional: true
   def average_review
     reviews.average(:rating)
   end
@@ -30,5 +29,13 @@ class Item <ApplicationRecord
     Item.select('items.*, SUM(quantity) AS total_quantity').limit(5).joins(:item_orders).group('items.id').order("total_quantity #{asc_or_desc}")
 
     # SELECT items.*, sum(item_orders.quantity) AS total_quantity FROM items LEFT JOIN item_orders ON items.id = item_orders.item_id GROUP BY items.id;
+  end
+
+  def self.deactivate_items
+    update_all(:active? => false)
+  end
+
+  def self.activate_items
+    update_all(:active? => true)
   end
 end

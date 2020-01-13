@@ -16,7 +16,7 @@ RSpec.describe "As a Visitor" do
         expect(current_path).to eq("/items/#{@tire.id}/edit")
         expect(page).to have_link("Gatorskins")
         expect(find_field('Name').value).to eq "Gatorskins"
-        expect(find_field('Price').value).to eq '$100.00'
+        expect(find_field('Price').value).to eq '100'
         expect(find_field('Description').value).to eq "They'll never pop!"
         expect(find_field('Image').value).to eq("https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588")
         expect(find_field('Inventory').value).to eq '12'
@@ -65,7 +65,7 @@ RSpec.describe "As a Visitor" do
 
         click_button "Update Item"
 
-        expect(page).to have_content("Name can't be blank and Image can't be blank")
+        expect(page).to have_content("Name can't be blank")
         expect(page).to have_button("Update Item")
       end
     end

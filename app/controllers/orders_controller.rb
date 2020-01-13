@@ -28,7 +28,7 @@ class OrdersController < ApplicationController
   end
 
   def index
-    @orders = Order.all
+    @orders = current_user.orders
   end
 
   def cancel

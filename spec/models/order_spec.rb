@@ -25,8 +25,8 @@ describe Order, type: :model do
       user = User.create!(name: "User", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user@user.com", password: "user", password_confirmation: "user")
       @order_1 = user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 2)
 
-      @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
-      @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
+      @item_order_1 = @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
+      @item_order_2 = @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
     end
 
     it 'grandtotal' do
@@ -62,6 +62,22 @@ describe Order, type: :model do
 
     it 'total_quantity' do
       expect(@order_1.total_quantity).to eq(5)
+    end
+
+    it "fulfill" do
+      user = User.create!(name: "User", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user2@user.com", password: "user", password_confirmation: "user")
+      order_1 = user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+      order_2 = user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+
+      expect(order_1.status).to eq('pending')
+      expect(order_2.status).to eq('pending')
+
+      Order.fulfill(order_1.id)
+      order_1.reload
+      order_2.reload
+
+      expect(order_1.status).to eq('packaged')
+      expect(order_2.status).to eq('pending')
     end
   end
 end

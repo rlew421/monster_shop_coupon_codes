@@ -1,0 +1,63 @@
+<section class = "shipping-address">
+  <h1 align = "center">Shipping Info</h1>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Address</th>
+      <th>City</th>
+      <th>State</th>
+      <th>Zip</th>
+    </tr>
+    <%= link_to 'Cancel Order', "/orders/#{@order.id}", method: :patch %>
+    <tr>
+      <td><p><%= @order.name %> </p></td>
+      <td><p><%= @order.address %> </p></td>
+      <td><p><%= @order.city %> </p></td>
+      <td><p><%= @order.state %> </p></td>
+      <td><p><%= @order.zip %> </p></td>
+    </tr>
+  </table>
+</section>
+
+<h1 align = "center">Order Info</h1>
+<center>
+  <table id="items">
+    <tr>
+      <th>Item</th>
+      <th>Image</th>
+      <th>Description</th>
+      <th>Sold By</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Subtotal</th>
+      <th>Fulfilled?</th>
+    </tr>
+  <% current_user.merchant.item_orders_on_order(@order).each do |item_order|%>
+    <tr id = "item-<%=item_order.item_id%>">
+      <td><p><%=link_to item_order.item.name, "/items/#{item_order.item_id}"%></p></td>
+      <td>
+        <section class="cart_image" id= 'image-item-<%="#{item_order.item.id}"%>'>
+          <%= link_to image_tag("#{item_order.item.image}"), "/items/#{item_order.item.id}", id: "#{item_order.item.id}-photo"%>
+        </section>
+      </td>
+      <td><p><%= item_order.item.description %></td>
+      <td><p><%= link_to item_order.item.merchant.name, "/merchants/#{item_order.item.merchant.id}"%></p></td>
+      <td><p><%= number_to_currency(item_order.price)%></p></td>
+      <td><p><%= item_order.quantity%></p></td>
+      <td><p><%= number_to_currency(item_order.subtotal)%></p></td>
+      <% if item_order.quantity <= item_order.item.inventory && item_order.status == 'unfulfilled'%>
+        <td><p><%= link_to "Fulfill #{item_order.item.name}", "/merchant/orders/#{@order.id}/item_orders/#{item_order.id}/fulfill"%></p></td>
+      <% elsif item_order.quantity > item_order.item.inventory %>
+        <td><p>You do not have enough inventory to fulfill <%= item_order.item.name %></p></td>
+      <% elsif item_order.status == 'fulfilled'%>
+      <td><p>Fulfilled</p></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+<h1 align = "center">Order ID: <%= @order.id %></h1>
+<h1 align = "center">Order creation date: <%= @order.created_at.strftime('%m/%d/%Y') %></h1>
+<h1 align = "center">Order updated on: <%= @order.updated_at.strftime('%m/%d/%Y') %></h1>
+<h1 align = "center">Order status: <%= @order.status %></h1>
+<h1 align = "center">Order total: <%= number_to_currency(@order.grandtotal) %></h1>
+<h1 align = "center">Total items ordered: <%= @order.total_quantity %></h1>

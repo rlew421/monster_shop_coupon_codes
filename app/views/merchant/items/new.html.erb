@@ -1,0 +1,23 @@
+<h1>Create New Item For <%=link_to @merchant.name, "/merchants/#{@merchant.id}" %></h1>
+
+<center>
+  <%= form_tag "/merchants/#{@merchant.id}/items", method: :post do %>
+    <%= label_tag :name %>
+    <%= text_field_tag :name, @auto_popu["name"].nil? ? '' : @auto_popu["name"]%>
+
+    <%= label_tag :description %>
+    <%= text_field_tag :description, @auto_popu["description"].nil? ? '' : @auto_popu["description"]%>
+
+    <%= label_tag :price %>
+    <%= text_field_tag :price, @auto_popu["price"].nil? ? '' : @auto_popu["price"] %>
+
+    <%= label_tag :image %>
+    <%= text_field_tag :image, @auto_popu["image"].nil? ? '' : @auto_popu["image"] %>
+
+    <%= label_tag :inventory %>
+    <%= text_field_tag :inventory, @auto_popu["inventory"].nil? ? '' : @auto_popu["inventory"]  %>
+
+    <%= submit_tag 'Create Item' %>
+  <% end %>
+
+</center>

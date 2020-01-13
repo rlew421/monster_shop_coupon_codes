@@ -1,5 +1,5 @@
 
-class Order <ApplicationRecord
+class Order < ApplicationRecord
   has_many :item_orders
   has_many :items, through: :item_orders
   belongs_to :user
@@ -27,5 +27,9 @@ class Order <ApplicationRecord
   def self.status(status_searching_for)
     # can take argument of "packaged", "pending", "shipped", or "cancelled"
     where(status: "#{status_searching_for}")
+  end
+
+  def self.fulfill(order_id)
+    Order.where(id: order_id).update(status: 1)
   end
 end

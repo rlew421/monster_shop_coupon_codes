@@ -1,15 +1,40 @@
 <h1> Your Orders <h1>
 
   <% @orders.each do |order| %>
-    <p><%= link_to "Order Number: #{order.id}", "/profile/orders/#{order.id}" %></p>
-    <p> Order Created at: <%= "#{order.created_at.day}/#{order.created_at.month}/#{order.created_at.year}" %></p>
-    <p> Order Updated at: <%= "#{order.updated_at.day}/#{order.updated_at.month}/#{order.updated_at.year}" %></p>
-    <p> Order Status: <%= order.status %></p>
-    <% if order.total_items < 2%>
-      <p>Total Number of Items in Your Order: <%= order.total_items %> Item</p>
-    <% else %>
-      <p>Total Number of Items in Your Order: <%= order.total_items %> Items</p>
+    <section class="shipping-address">
+      <h3>Shipping Info:</h3>
+      <p>Name: <%= order.name %></p>
+      <p>Address: <%= order.address %></p>
+      <p>City: <%= order.city %></p>
+      <p>State: <%= order.state %></p>
+      <p>Zip: <%= order.zip %></p>
+    </section>
+
+    <section id= 'order-<%=order.id%>'>
+      <p><%= link_to "Order Number: #{order.id}", "/profile/orders/#{order.id}" %></p>
+      <section id="datecreated">
+        <p> Order Created at: <%= order.created_at.strftime('%m/%d/%y') %></p>
+      </section>
+      <p> Order Updated at: <%= order.created_at.strftime('%m/%d/%y') %></p>
+      <p> Order Status: <%= order.status %></p>
+      <% if order.total_items < 2%>
+        <p>Total Number of Items in Your Order: <%= order.total_items %> Item</p>
+      <% else %>
+        <p>Total Number of Items in Your Order: <%= order.total_items %> Items</p>
+      <% end %>
+        <section id="grandtotal"
+          <p>Your Total: <%= number_to_currency(order.grandtotal/100.0) %></p>
+        </section>
+      <br>
+    </section>
+
+    <% order.item_orders.each do |item_order| %>
+      <section id="item-<%= item_order.item.id %>">
+        <p><%= link_to "#{item_order.item.name}", "/items/#{item_order.item.id}" %></p>
+        <p><%= link_to "#{item_order.item.merchant.name}", "/merchants/#{item_order.item.merchant.id}" %></p>
+        <p>Price: <%= number_to_currency(item_order.item.price/100.0) %></p>
+        <p>Quantity: <%= item_order.quantity %></p>
+        <p>Total: <%= number_to_currency(item_order.subtotal/100.0) %></p>
+      </section>
     <% end %>
-      <p>Your Total: <%= number_to_currency(order.grandtotal) %></p>
-    <br>
   <% end %>

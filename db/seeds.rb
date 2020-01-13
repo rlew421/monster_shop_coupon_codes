@@ -25,15 +25,16 @@ dog_bone = dog_shop.items.create(name: "Dog Bone", description: "They'll love it
 
 #users
 user = User.create!(name: "User", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user@user.com", password: "user", password_confirmation: "user")
-merchant_employee = User.create!(name: "Merchant Employee", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "merchant_employee@merchant_employee.com", password: "merchant_employee", password_confirmation: "merchant_employee", role: 1)
-merchant_admin = User.create!(name: "Merchant Admin", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "merchant_admin@merchant_admin.com", password: "merchant_admin", password_confirmation: "merchant_admin", role: 2)
+merchant_employee_1 = User.create!(name: "Merchant Employee 1", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "merchant_employee@merchant_employee.com", password: "merchant_employee_1", password_confirmation: "merchant_employee_1", role: 1)
+merchant_employee_2 = dog_shop.users.create!(name: "Merchant Employee 2", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "merchant_employee_2@merchant_employee_2.com", password: "merchant_employee_2", password_confirmation: "merchant_employee_2", role: 1)
+merchant_admin = bike_shop.users.create!(name: "Merchant Admin", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "merchant_admin@merchant_admin.com", password: "merchant_admin", password_confirmation: "merchant_admin", role: 2)
 admin = User.create!(name: "Admin", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "admin@admin.com", password: "admin", password_confirmation: "admin", role: 3)
 
 #orders
 order_1 = user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
 order_2 = user.orders.create!(name: 'Mike', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
 item_order_1 = order_1.item_orders.create!(item: tire, price: tire.price, quantity: 5)
-item_order_1 = order_1.item_orders.create!(item: pull_toy, price: pull_toy.price, quantity: 1)
-item_order_1 = order_1.item_orders.create!(item: dog_bone, price: dog_bone.price, quantity: 10)
-item_order_2 = order_2.item_orders.create!(item: tire, price: tire.price, quantity: 7)
-item_order_2 = order_2.item_orders.create!(item: pull_toy, price: pull_toy.price, quantity: 20)
+item_order_2 = order_1.item_orders.create!(item: pull_toy, price: pull_toy.price, quantity: 1)
+item_order_3 = order_1.item_orders.create!(item: dog_bone, price: dog_bone.price, quantity: 10)
+item_order_4 = order_2.item_orders.create!(item: tire, price: tire.price, quantity: 7)
+item_order_5 = order_2.item_orders.create!(item: pull_toy, price: pull_toy.price, quantity: 20)

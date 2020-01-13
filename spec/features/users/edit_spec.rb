@@ -51,6 +51,12 @@ RSpec.describe 'User profile page' do
     expect(page).to have_content("Changed my name again")
     expect(page).to have_content("90210 Different Address Dr.")
     expect(page).to_not have_content("Changed User")
+
+    click_link "Edit your profile"
+    fill_in :name, with: ""
+    click_button "Update My Profile"
+
+    expect(page).to have_content("Name can't be blank")
   end
 
   it "I can click a link that allows me to edit my password through a form" do
