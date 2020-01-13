@@ -25,3 +25,5 @@
 <% if @user.merchant != nil %>
   <%= link_to "View My Items", "/merchant/#{@user.merchant.id}/items" %>
 <% end %>
+
+<%= link_to "Manage Coupons", "/merchant/coupons" %>
