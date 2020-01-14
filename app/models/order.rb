@@ -3,6 +3,7 @@ class Order < ApplicationRecord
   has_many :item_orders
   has_many :items, through: :item_orders
   belongs_to :user
+  belongs_to :coupon, optional: true
 
   validates_presence_of :name,
                         :address,
