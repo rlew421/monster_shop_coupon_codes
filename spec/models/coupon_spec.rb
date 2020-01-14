@@ -7,6 +7,7 @@ RSpec.describe Coupon, type: :model do
     it {should validate_presence_of :code}
     it {should validate_uniqueness_of :code}
     it {should validate_presence_of :percentage_off}
+    it {should validate_numericality_of(:percentage_off).is_less_than_or_equal_to(100)}
   end
 
   describe 'relationships' do
