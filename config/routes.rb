@@ -71,6 +71,7 @@ Rails.application.routes.draw do
     post '/coupons', to: 'coupons#create'
     get '/coupons/:coupon_id/edit', to: 'coupons#edit'
     patch '/coupons', to: 'coupons#update'
+    delete '/coupons/:coupon_id', to: 'coupons#destroy'
   end
 
   namespace :admin do
