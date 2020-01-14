@@ -70,8 +70,22 @@ RSpec.describe 'Cart show' do
         click_link "log in"
         expect(current_path).to eq('/login')
       end
+
+      it "I have the ability to add a coupon code when I have items in my cart" do
+        coupon = @mike.coupons.create!(name: "Ten Percent Off", code: "NEWYEAR10", percentage_off: 10)
+        visit "/items/#{@pencil.id}"
+        click_on "Add To Cart"
+
+        visit '/cart'
+        
+        fill_in :code, with: "NEWYEAR10"
+        click_button "Apply Coupon Code"
+
+        expect(current_path).to eq('/cart')
+      end
     end
   end
+
   describe "When I haven't added anything to my cart" do
     describe "and visit my cart show page" do
       it "I see a message saying my cart is empty" do
