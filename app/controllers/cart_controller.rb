@@ -48,6 +48,10 @@ class CartController < ApplicationController
   #   redirect_to "/cart"
   # end
 
+  def apply_coupon
+
+  end
+
   private
 
     def not_admin?
