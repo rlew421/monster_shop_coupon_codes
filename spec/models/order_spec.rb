@@ -12,6 +12,7 @@ describe Order, type: :model do
   describe "relationships" do
     it {should have_many :item_orders}
     it {should have_many(:items).through(:item_orders)}
+    it {should belong_to(:coupon).optional}
   end
 
   describe 'instance methods' do
