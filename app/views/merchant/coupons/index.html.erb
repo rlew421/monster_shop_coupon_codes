@@ -2,8 +2,10 @@
 
 <% @merchant.coupons.each do |coupon| %>
   <section id='coupon-<%=coupon.id%>'>
-    <p><%= link_to "#{coupon.name}", "/merchant/coupons/#{coupon.id}" %></p>
+    <h3><%= link_to "#{coupon.name}", "/merchant/coupons/#{coupon.id}" %></h3>
     <p>Coupon Code: <%= coupon.code %></p>
     <p>Percentage Off: <%= coupon.percentage_off %></p>
   </section>
 <% end %>
+
+<%= link_to "Create New Coupon", "/merchant/coupons/new" %>
