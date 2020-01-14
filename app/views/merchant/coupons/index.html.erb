@@ -5,6 +5,7 @@
     <h3><%= link_to "#{coupon.name}", "/merchant/coupons/#{coupon.id}" %></h3>
     <p>Coupon Code: <%= coupon.code %></p>
     <p>Percentage Off: <%= coupon.percentage_off %></p>
+    <p><%= link_to "Edit #{coupon.name}", "/merchant/coupons/#{coupon.id}/edit" %></p>
   </section>
 <% end %>
 
