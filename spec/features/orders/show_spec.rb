@@ -47,4 +47,60 @@ RSpec.describe "Order show page", type: :feature do
       expect(current_path).to eq("/items/#{item_order_2.item_id}")
     end
   end
+
+  xit "when a coupon is applied, order show page can display which coupon was used and discounted price of the order" do
+    new_store = Merchant.create(name: "New Store", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
+    other_store = Merchant.create(name: "Other Store", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
+
+    item_1 = new_store.items.create(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 25)
+    item_2 = new_store.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
+    item_3 = other_store.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+
+    coupon_1 = new_store.coupons.create!(name: "Ten Percent Off", code: "NEWYEAR10", percentage_off: 10)
+    coupon_2 = other_store.coupons.create!(name: "Fifteen Percent Off", code: "NEWYEAR15", percentage_off: 15)
+
+    user = User.create!(name: "User", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user@user.com", password: "user", password_confirmation: "user")
+
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+    visit "/items/#{item_1.id}"
+    click_on "Add To Cart"
+    visit "/items/#{item_2.id}"
+    click_on "Add To Cart"
+    visit "/items/#{item_3.id}"
+    click_on "Add To Cart"
+
+    visit '/cart'
+
+    fill_in :code, with: "NEWYEAR10"
+    click_button "Apply Coupon Code"
+
+    expect(current_path).to eq('/cart')
+
+    expect(page).to have_content("Total: $122.00")
+    expect(page).to have_content("Discounted Total: $119.80")
+    click_on "Checkout"
+
+    name = "Bert"
+    address = "123 Sesame St."
+    city = "NYC"
+    state = "New York"
+    zip = 10001
+
+    fill_in :name, with: name
+    fill_in :address, with: address
+    fill_in :city, with: city
+    fill_in :state, with: state
+    fill_in :zip, with: zip
+
+    click_button "Create Order"
+
+    new_order = Order.last
+
+    expect(current_path).to eq("/profile/orders")
+
+
+    expect(page).to have_content("Discounted Total: $119.80")
+    expect(page).to have_content("Coupon Applied: Ten Percent Off")
+  end
 end
