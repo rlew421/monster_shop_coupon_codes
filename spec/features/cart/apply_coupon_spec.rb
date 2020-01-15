@@ -96,4 +96,41 @@ RSpec.describe 'when I visit the cart show page' do
     expect(page).to have_content("Total: $142.00")
     expect(page).to have_content("Discounted Total: $137.80")
   end
+
+  it "only one coupon can be used per order and only most recent coupon is applied" do
+    new_store = Merchant.create(name: "New Store", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
+    other_store = Merchant.create(name: "Other Store", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
+
+    item_1 = new_store.items.create(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 25)
+    item_2 = new_store.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
+    item_3 = other_store.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+
+    coupon_1 = new_store.coupons.create!(name: "Ten Percent Off", code: "NEWYEAR10", percentage_off: 10)
+    coupon_2 = other_store.coupons.create!(name: "Fifteen Percent Off", code: "NEWYEAR15", percentage_off: 15)
+
+    visit "/items/#{item_1.id}"
+    click_on "Add To Cart"
+    visit "/items/#{item_2.id}"
+    click_on "Add To Cart"
+    visit "/items/#{item_3.id}"
+    click_on "Add To Cart"
+
+    visit '/cart'
+
+    fill_in :code, with: "NEWYEAR10"
+    click_button "Apply Coupon Code"
+
+    expect(current_path).to eq('/cart')
+
+    expect(page).to have_content("Total: $122.00")
+    expect(page).to have_content("Discounted Total: $119.80")
+
+    fill_in :code, with: "NEWYEAR15"
+    click_button "Apply Coupon Code"
+
+    expect(current_path).to eq('/cart')
+
+    expect(page).to have_content("Total: $122.00")
+    expect(page).to have_content("Discounted Total: $107.00")
+  end
 end
