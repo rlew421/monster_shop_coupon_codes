@@ -49,6 +49,28 @@ describe Item, type: :model do
       order_1.item_orders.create(item: @chain, price: @chain.price, quantity: 2)
       expect(@chain.no_orders?).to eq(false)
     end
+
+    it "discounted price" do
+      bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+      shifter = bike_shop.items.create(name: "Shimano Shifters", description: "It'll always shift!", active?: false, price: 180, image: "https://images-na.ssl-images-amazon.com/images/I/4142WWbN64L._SX466_.jpg", inventory: 2)
+      tire = bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+      coupon = bike_shop.coupons.create!(name: "Ten Percent Off", code: "NEWYEAR10", percentage_off: 10)
+
+      expect(shifter.discounted_price(coupon.id)).to eq(162.0)
+      expect(shifter.discounted_price(nil)).to eq(180.0)
+    end
+
+    it "coupon_belongs_to_merchant?" do
+      bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+      dog_shop = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
+      shifter = bike_shop.items.create(name: "Shimano Shifters", description: "It'll always shift!", active?: false, price: 180, image: "https://images-na.ssl-images-amazon.com/images/I/4142WWbN64L._SX466_.jpg", inventory: 2)
+      pull_toy = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+      coupon_1 = bike_shop.coupons.create!(name: "Ten Percent Off", code: "NEWYEAR10", percentage_off: 10)
+      coupon_2 = dog_shop.coupons.create!(name: "Another Ten Percent Off", code: "ANOTHERNEWYEAR10", percentage_off: 10)
+
+      expect(shifter.coupon_belongs_to_merchant?(coupon_1.id)).to eq(true)
+      expect(shifter.coupon_belongs_to_merchant?(coupon_2.id)).to eq(false)
+    end
   end
 
   describe "class methods" do

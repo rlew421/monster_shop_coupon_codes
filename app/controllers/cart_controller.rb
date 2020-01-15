@@ -16,6 +16,7 @@ class CartController < ApplicationController
 
   def show
     @items = cart.items
+    @coupon = session[:coupon_id]
   end
 
   def empty
@@ -47,6 +48,15 @@ class CartController < ApplicationController
   #   end
   #   redirect_to "/cart"
   # end
+
+  def apply_coupon
+    coupon = Coupon.find_by(code: params[:code])
+    if coupon
+      session[:coupon_id] = coupon.id
+      flash[:success] = "#{coupon.name} has been applied!"
+    end
+    redirect_to '/cart'
+  end
 
   private
 

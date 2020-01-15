@@ -38,4 +38,18 @@ class Item <ApplicationRecord
   def self.activate_items
     update_all(:active? => true)
   end
+
+  def coupon_belongs_to_merchant?(coupon_id)
+    coupon = Coupon.find(coupon_id)
+    coupon.merchant_id == self.merchant_id
+  end
+
+  def discounted_price(coupon_id)
+    if !coupon_id || !coupon_belongs_to_merchant?(coupon_id)
+      self.price
+    else
+      coupon = Coupon.find(coupon_id)
+      self.price * (1 - (coupon.percentage_off)/100)
+    end
+  end
 end
