@@ -31,7 +31,7 @@ rspec
 
 ## Schema Design
 
-![image]("https://user-images.githubusercontent.com/48839191/72415578-f285c680-3731-11ea-94f8-64fed5bab387.png")
+![image](https://user-images.githubusercontent.com/48839191/72415578-f285c680-3731-11ea-94f8-64fed5bab387.png)
 
 ## User Roles
 
