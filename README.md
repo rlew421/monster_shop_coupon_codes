@@ -11,7 +11,7 @@ Monster Shop is a fictional e-commerce application built using Rails v5.1.7. The
 1. Clone this repository.
 
 ```
-git clone git@github.com:LainMcGrath/monster_shop_part_1.git
+git clone git@github.com:rlew421/monster_shop_coupon_codes.git
 ```
 2. Navigate into directory and run:
 
