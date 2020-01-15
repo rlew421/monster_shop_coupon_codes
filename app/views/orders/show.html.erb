@@ -56,3 +56,7 @@
 <h1 align = "center">Order status: <%= @order.status %></h1>
 <h1 align = "center">Order total: <%= number_to_currency(@order.grandtotal) %></h1>
 <h1 align = "center">Total items ordered: <%= @order.total_quantity %></h1>
+
+<% if !@order.coupon_id.nil? %>
+<p>Coupon Applied: <%= @order.coupon.name %></p>
+<% end %>
