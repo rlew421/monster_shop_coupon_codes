@@ -54,10 +54,15 @@ describe Item, type: :model do
       bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       shifter = bike_shop.items.create(name: "Shimano Shifters", description: "It'll always shift!", active?: false, price: 180, image: "https://images-na.ssl-images-amazon.com/images/I/4142WWbN64L._SX466_.jpg", inventory: 2)
       tire = bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
-      coupon = bike_shop.coupons.create!(name: "Ten Percent Off", code: "NEWYEAR10", percentage_off: 10)
+      coupon_1 = bike_shop.coupons.create!(name: "Ten Percent Off", code: "NEWYEAR10", percentage_off: 10)
 
-      expect(shifter.discounted_price(coupon.id)).to eq(162.0)
+      mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
+      pencil = mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
+      coupon_2 = mike.coupons.create!(name: "Another Ten Percent Off", code: "ANOTHERNEWYEAR10", percentage_off: 10)
+
+      expect(shifter.discounted_price(coupon_1.id)).to eq(162.0)
       expect(shifter.discounted_price(nil)).to eq(180.0)
+      expect(shifter.discounted_price(coupon_2.id)).to eq(180.0)
     end
 
     it "coupon_belongs_to_merchant?" do
