@@ -51,6 +51,7 @@ class CartController < ApplicationController
 
   def apply_coupon
     coupon = Coupon.find_by(code: params[:code])
+    # binding.pry
     if coupon
       session[:coupon_id] = coupon.id
       flash[:success] = "#{coupon.name} has been applied!"

@@ -4,7 +4,7 @@ class Merchant::CouponsController < Merchant::BaseController
   end
 
   def show
-    @coupon = Coupon.find(params[:coupon_id])
+    @coupon = Coupon.find(params[:id])
   end
 
   def new
@@ -17,17 +17,17 @@ class Merchant::CouponsController < Merchant::BaseController
   end
 
   def edit
-    @coupon = Coupon.find(params[:coupon_id])
+    @coupon = Coupon.find(params[:id])
   end
 
   def update
-    coupon = Coupon.find_by(params[id: :coupon_id])
+    coupon = Coupon.find_by(params[id: :id])
     coupon.update(coupon_params)
     redirect_to '/merchant/coupons'
   end
 
   def destroy
-    coupon = Coupon.find(params[:coupon_id])
+    coupon = Coupon.find(params[:id])
     coupon.destroy
     redirect_to '/merchant/coupons'
   end
