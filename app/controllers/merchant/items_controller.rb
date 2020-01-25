@@ -45,7 +45,7 @@ class Merchant::ItemsController < Merchant::BaseController
 
     def update
       merchant = Merchant.find(params[:merchant_id])
-      item = merchant.items.find(params[:item_id])
+      item = merchant.items.find(params[:id])
       item.toggle(:active?).save
       if item.active?
         flash[:success] = "#{item.name} is active and available for sale."
@@ -69,7 +69,7 @@ class Merchant::ItemsController < Merchant::BaseController
 
   def destroy
     merchant = Merchant.find(params[:merchant_id])
-    item = merchant.items.find(params[:item_id])
+    item = merchant.items.find(params[:id])
     item.destroy
     flash[:notice] = "#{item.name} has been deleted."
     redirect_to "/merchants/#{merchant.id}/items"

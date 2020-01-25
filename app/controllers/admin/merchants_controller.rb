@@ -4,11 +4,11 @@ class Admin::MerchantsController < Admin::BaseController
   end
 
   def show
-    @merchant = Merchant.find(params[:merchant_id])
+    @merchant = Merchant.find(params[:id])
   end
 
   def update
-    @merchant = Merchant.find(params[:merchant_id])
+    @merchant = Merchant.find(params[:id])
     @merchant.toggle(:enabled?).save
     if @merchant.enabled?
       flash[:notice] = "#{@merchant.name} has been enabled."
